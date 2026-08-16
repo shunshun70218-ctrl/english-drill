@@ -84,6 +84,36 @@ def build_wordbank() -> int:
         "themes": [{"slug": t["slug"], "name": t["name"], "words": t["words"]} for t in bank["themes"]],
     }]
 
+    # 給 n8n 每日推播用的扁平清單。音檔長度要帶著——LINE 的語音訊息
+    # 一定要給 duration（毫秒），沒有的話訊息會被 LINE 退回。
+    flat = []
+    for theme in bank["themes"]:
+        for index, word in enumerate(theme["words"], 1):
+            key = f"{theme['slug']}-{index:02d}"
+            entry = {
+                "term": word["term"],
+                "syllables": word["syllables"],
+                "stress": word["stress"],
+                "ipa": word["ipa"],
+                "pos": word.get("pos", ""),
+                "zh": word["zh"],
+                "theme": theme["name"],
+                "example_en": word.get("example_en", ""),
+                "example_zh": word.get("example_zh", ""),
+                "audio": word["audio"],
+                "audio_ms": int(round(manifest[f"{key}-w"]["dur"] * 1000)),
+            }
+            example = manifest.get(f"{key}-e")
+            if example:
+                entry["example_audio"] = word["example_audio"]
+                entry["example_ms"] = int(round(example["dur"] * 1000))
+            flat.append(entry)
+
+    (out_dir / "words.json").write_text(
+        json.dumps({"count": len(flat), "words": flat}, ensure_ascii=False),
+        encoding="utf-8",
+    )
+
     css = (TEMPLATES / "player.css").read_text(encoding="utf-8")
     extra = (TEMPLATES / "wordbank.css").read_text(encoding="utf-8")
     js = (TEMPLATES / "wordbank.js").read_text(encoding="utf-8")
