@@ -1,0 +1,192 @@
+{
+  "line-01": {
+    "hash": "ece9bbde51b66336e7f747bd4bc85b455d67273d",
+    "file": "line-01.m4a",
+    "dur": 2.005
+  },
+  "line-02": {
+    "hash": "d891e526d3eef05463c4039574ff034eff85b8bf",
+    "file": "line-02.m4a",
+    "dur": 2.37
+  },
+  "line-03": {
+    "hash": "ff98b2b95176de65b0f3876d0f19fcc45d06990d",
+    "file": "line-03.m4a",
+    "dur": 1.649
+  },
+  "line-04": {
+    "hash": "7165cbd64a5e41d544af90f531a21bfff3a7e074",
+    "file": "line-04.m4a",
+    "dur": 1.279
+  },
+  "line-05": {
+    "hash": "68f78c74309ec3ec16455769ccba888002add47f",
+    "file": "line-05.m4a",
+    "dur": 0.82
+  },
+  "line-06": {
+    "hash": "9aef7c808b1cce5eac4e90b74543b2a2988905ae",
+    "file": "line-06.m4a",
+    "dur": 2.894
+  },
+  "line-07": {
+    "hash": "dbc99f5cea943f41aa833bff924956df0fbaccaa",
+    "file": "line-07.m4a",
+    "dur": 2.017
+  },
+  "line-08": {
+    "hash": "939f6d68bda11185db8774bf0340c5f1a3020bee",
+    "file": "line-08.m4a",
+    "dur": 1.268
+  },
+  "line-09": {
+    "hash": "9bfc24ea3f999e13dbb77309a06d56bf34884cf7",
+    "file": "line-09.m4a",
+    "dur": 2.22
+  },
+  "line-10": {
+    "hash": "beb30c96b328df3397c2fa3c303942f5dcc37547",
+    "file": "line-10.m4a",
+    "dur": 2.403
+  },
+  "line-11": {
+    "hash": "a44886cfca039dea38999e80a054327503a73270",
+    "file": "line-11.m4a",
+    "dur": 1.332
+  },
+  "line-12": {
+    "hash": "f6f31021eefd0d9ca964606f9785e7fb8fd7125a",
+    "file": "line-12.m4a",
+    "dur": 1.268
+  },
+  "line-13": {
+    "hash": "a6787bca909893de9e03f38362490b420caa37f8",
+    "file": "line-13.m4a",
+    "dur": 2.634
+  },
+  "line-14": {
+    "hash": "3a5adfc808a7913c799bfd8cd5fd85f9db874417",
+    "file": "line-14.m4a",
+    "dur": 2.267
+  },
+  "line-15": {
+    "hash": "25b7b3ce7c2ee45829adc36b4a16bab8d18b306d",
+    "file": "line-15.m4a",
+    "dur": 2.39
+  },
+  "line-16": {
+    "hash": "5277cacad21a2931a39d36a048fc2d9fb7f97f7b",
+    "file": "line-16.m4a",
+    "dur": 3.498
+  },
+  "line-17": {
+    "hash": "c0cfd832b1a1a61e644bd08e840c1451ad251b6c",
+    "file": "line-17.m4a",
+    "dur": 2.492
+  },
+  "line-18": {
+    "hash": "0e780da04ec217b68dc62e0530111c8e81520b23",
+    "file": "line-18.m4a",
+    "dur": 1.581
+  },
+  "word-01": {
+    "hash": "9d0f8fa5d42cbf36b4426d370ed7697fee3ea7c4",
+    "file": "word-01.m4a",
+    "dur": 0.594
+  },
+  "ex-01": {
+    "hash": "6b52b739958fc74ad01cd07c26420b02f1e8a7d5",
+    "file": "ex-01.m4a",
+    "dur": 1.459
+  },
+  "word-02": {
+    "hash": "8bfbc3bc32ae3b14d2bf11669185c2db8cd9461f",
+    "file": "word-02.m4a",
+    "dur": 0.505
+  },
+  "ex-02": {
+    "hash": "d87287c89e98a4f439dc85533519090aa9d5db6a",
+    "file": "ex-02.m4a",
+    "dur": 1.569
+  },
+  "word-03": {
+    "hash": "2c86b9ae10a766fdd370dcfae78da3d9bea41f8b",
+    "file": "word-03.m4a",
+    "dur": 0.577
+  },
+  "ex-03": {
+    "hash": "ae863724130cc8fcf0c3892c6cad3162ddf6443f",
+    "file": "ex-03.m4a",
+    "dur": 1.883
+  },
+  "word-04": {
+    "hash": "f76407dadbfd1294e4c03264fbca0013a6360223",
+    "file": "word-04.m4a",
+    "dur": 0.557
+  },
+  "ex-04": {
+    "hash": "a1d9944d6e8c53476cc16e43d1b9f195f8ae9373",
+    "file": "ex-04.m4a",
+    "dur": 1.367
+  },
+  "word-05": {
+    "hash": "1d6a01be954fcb84a8bd9fb2b0b9c11fb76a9af9",
+    "file": "word-05.m4a",
+    "dur": 0.676
+  },
+  "ex-05": {
+    "hash": "d08061809e45559b44c41a726716145073e308b9",
+    "file": "ex-05.m4a",
+    "dur": 1.625
+  },
+  "word-06": {
+    "hash": "f9faf71ee3e9c5b4d699582278fd40b941d77da8",
+    "file": "word-06.m4a",
+    "dur": 0.564
+  },
+  "ex-06": {
+    "hash": "9f279a7a12fccff2bd66625b3218037ac927b943",
+    "file": "ex-06.m4a",
+    "dur": 1.851
+  },
+  "word-07": {
+    "hash": "efbc59805386495ae816d5dc8ecd485b72813584",
+    "file": "word-07.m4a",
+    "dur": 0.692
+  },
+  "ex-07": {
+    "hash": "d34d9c9dfb7b011dd5efbbe8c3ab9f3bfc57dfaf",
+    "file": "ex-07.m4a",
+    "dur": 1.204
+  },
+  "word-08": {
+    "hash": "3b6cc8fa9dc5e7e01005aad080b994e5a0e3fbf6",
+    "file": "word-08.m4a",
+    "dur": 0.557
+  },
+  "ex-08": {
+    "hash": "0f24896c6fb21d863768fbfca698851a37e80ec6",
+    "file": "ex-08.m4a",
+    "dur": 1.012
+  },
+  "word-09": {
+    "hash": "e23c5f31a7051d20bff71c3ce82dcec32787110a",
+    "file": "word-09.m4a",
+    "dur": 0.576
+  },
+  "ex-09": {
+    "hash": "bbc77049d70ea53cbb219f37f3ec16eb39d53fcc",
+    "file": "ex-09.m4a",
+    "dur": 1.727
+  },
+  "word-10": {
+    "hash": "5d20324b3605366bf35ba5f9ca5b897b0540ce71",
+    "file": "word-10.m4a",
+    "dur": 0.467
+  },
+  "ex-10": {
+    "hash": "e20b96047395ac72f21b4d2fdc34e93adcf1ff84",
+    "file": "ex-10.m4a",
+    "dur": 1.502
+  }
+}

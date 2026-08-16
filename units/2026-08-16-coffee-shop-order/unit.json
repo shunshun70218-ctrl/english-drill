@@ -1,0 +1,61 @@
+{
+  "slug": "coffee-shop-order",
+  "title": "咖啡店點餐",
+  "title_en": "Ordering at a Coffee Shop",
+  "level": "A2–B1",
+  "date": "2026-08-16",
+  "scene": "你在一間咖啡店點一杯冰拿鐵，順便加點一個可頌。過程中要處理換燕麥奶要加價、內用還是外帶、以及留名字取餐。",
+  "roles": {
+    "A": { "name": "Barista", "zh": "咖啡師", "voice": "Samantha", "rate": 155 },
+    "B": { "name": "You", "zh": "顧客（你）", "voice": "Daniel", "rate": 155 }
+  },
+  "lines": [
+    { "role": "A", "en": "Hi there! What can I get for you?", "zh": "嗨！想喝點什麼？" },
+    { "role": "B", "en": "Could I have a medium latte, please?", "zh": "可以給我一杯中杯拿鐵嗎？" },
+    { "role": "A", "en": "Sure. For here or to go?", "zh": "好的。內用還是外帶？" },
+    { "role": "B", "en": "To go, please.", "zh": "外帶，謝謝。" },
+    { "role": "A", "en": "Hot or iced?", "zh": "熱的還是冰的？" },
+    { "role": "B", "en": "Iced, please. It's really warm today.", "zh": "冰的，謝謝。今天真的很熱。" },
+    { "role": "A", "en": "It is. Any milk alternatives?", "zh": "確實。要換別種奶嗎？" },
+    { "role": "B", "en": "Do you have oat milk?", "zh": "你們有燕麥奶嗎？" },
+    { "role": "A", "en": "We do, but it's fifty cents extra.", "zh": "有，不過要多五十分。" },
+    { "role": "B", "en": "That's fine. Oat milk, then.", "zh": "沒問題，那就燕麥奶。" },
+    { "role": "A", "en": "Anything to eat with that?", "zh": "要不要配點吃的？" },
+    { "role": "B", "en": "What's in the case there?", "zh": "那個櫃子裡有什麼？" },
+    { "role": "A", "en": "Croissants, muffins, and banana bread.", "zh": "可頌、瑪芬，還有香蕉蛋糕。" },
+    { "role": "B", "en": "I'll take a croissant, thanks.", "zh": "那給我一個可頌，謝謝。" },
+    { "role": "A", "en": "That'll be six twenty. Can I get a name?", "zh": "總共六塊二。可以留個名字嗎？" },
+    { "role": "B", "en": "It's Shun. That's S, H, U, N.", "zh": "Shun，S、H、U、N。" },
+    { "role": "A", "en": "Got it. It'll be ready at the end of the counter.", "zh": "好了。做好會放在櫃台那一頭。" },
+    { "role": "B", "en": "Great, thanks a lot.", "zh": "太好了，非常謝謝。" }
+  ],
+  "vocab": [
+    { "term": "medium", "pos": "adj.", "zh": "中杯的、中的",
+      "example_en": "I'd like a medium coffee.", "example_zh": "我要一杯中杯咖啡。" },
+    { "term": "iced", "pos": "adj.", "zh": "冰的",
+      "example_en": "One iced tea, please.", "example_zh": "一杯冰紅茶，謝謝。" },
+    { "term": "to go", "pos": "phr.", "zh": "外帶",
+      "example_en": "One latte to go, please.", "example_zh": "一杯拿鐵外帶，謝謝。" },
+    { "term": "for here", "pos": "phr.", "zh": "內用",
+      "example_en": "Is that for here or to go?", "example_zh": "這是內用還是外帶？" },
+    { "term": "oat milk", "pos": "n.", "zh": "燕麥奶",
+      "example_en": "Can I get oat milk instead?", "example_zh": "可以改成燕麥奶嗎？" },
+    { "term": "extra", "pos": "adj.", "zh": "額外的、要加價的",
+      "example_en": "Oat milk is fifty cents extra.", "example_zh": "燕麥奶要多五十分。" },
+    { "term": "croissant", "pos": "n.", "zh": "可頌",
+      "example_en": "I'll take a croissant.", "example_zh": "我要一個可頌。" },
+    { "term": "case", "pos": "n.", "zh": "（食物的）展示櫃",
+      "example_en": "What's in the case?", "example_zh": "櫃子裡有什麼？" },
+    { "term": "counter", "pos": "n.", "zh": "櫃台",
+      "example_en": "Pick it up at the end of the counter.", "example_zh": "在櫃台那一頭取餐。" },
+    { "term": "order", "pos": "n.", "zh": "點的餐、訂單",
+      "example_en": "Your order will be ready soon.", "example_zh": "你點的東西很快就好。" }
+  ],
+  "tips": [
+    "店員一定會問 For here or to go?（內用還是外帶），這句要能秒答，不用聽完整句才反應。",
+    "croissant 重音在後面，唸 /krəˈsɑːnt/，不是照中文「可頌」的節奏唸。",
+    "六塊二就唸 six twenty，母語人士不會唸成 six point two zero dollars。",
+    "點餐用 Could I have… / I'll take… / Can I get…，不要用 I want —— I want 在櫃台聽起來很硬。",
+    "medium 在飲料店就是中杯，不用畫蛇添足講 medium size。"
+  ]
+}

@@ -1,0 +1,7 @@
+# 絕對不能進版控——會洩漏 token
+.claude/
+
+# 建置產物：Artifact 用的大檔（base64 內嵌，十幾 MB），docs/ 才是要發佈的
+build/
+
+.DS_Store

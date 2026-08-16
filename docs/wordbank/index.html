@@ -1,0 +1,1095 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="單字卡">
+<title>多益單字卡</title>
+<style>
+/* 英文情境對話練習 — 樣式
+ *
+ * 色彩系統在編碼一件事：這是兩個人的對話，而其中一個是你。
+ *   對方 = 深青 (--voice-a)    你 = 赭黃 (--voice-b)
+ * 凡是「輪到你講」的東西一律赭黃：你的台詞、換你講的提示、等待你開口的進度條。
+ * 英文內容用襯線體，介面中文用系統無襯線——正在學的語言跟操作介面分開。
+ */
+
+:root {
+  --bg: #eaedec;
+  --surface: #f8faf9;
+  --surface-2: #dfe5e3;
+  --line: #c9d3d0;
+  --ink: #141f1d;
+  --ink-soft: #4e5c59;
+  --ink-faint: #7c8a87;
+
+  --voice-a: #0f6a70;
+  --voice-b: #8e5410;
+  --accent: #0f6a70;
+  --accent-soft: #d5e5e5;
+  --you-soft: #f1e3ce;
+
+  --shadow: 0 1px 2px rgba(20, 31, 29, .05), 0 4px 16px rgba(20, 31, 29, .06);
+  --radius: 12px;
+
+  --sans: -apple-system, BlinkMacSystemFont, "PingFang TC", "Noto Sans TC", "Helvetica Neue", sans-serif;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, "Times New Roman", serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1615;
+    --surface: #17201f;
+    --surface-2: #202b29;
+    --line: #2e3b39;
+    --ink: #e3eae8;
+    --ink-soft: #a2b0ad;
+    --ink-faint: #74827f;
+
+    --voice-a: #57c2c9;
+    --voice-b: #e0a55e;
+    --accent: #57c2c9;
+    --accent-soft: #143033;
+    --you-soft: #332619;
+
+    --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 4px 16px rgba(0, 0, 0, .28);
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg: #0f1615;
+  --surface: #17201f;
+  --surface-2: #202b29;
+  --line: #2e3b39;
+  --ink: #e3eae8;
+  --ink-soft: #a2b0ad;
+  --ink-faint: #74827f;
+
+  --voice-a: #57c2c9;
+  --voice-b: #e0a55e;
+  --accent: #57c2c9;
+  --accent-soft: #143033;
+  --you-soft: #332619;
+
+  --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 4px 16px rgba(0, 0, 0, .28);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.65 var(--sans);
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.wrap {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 18px 16px 80px;
+}
+
+a { color: var(--accent); }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+/* ---------- 頁首 ---------- */
+
+.top { display: flex; flex-direction: column; gap: 4px; margin-bottom: 18px; }
+
+.top__back {
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  align-self: flex-start;
+}
+.top__back:hover { color: var(--accent); }
+
+.top__title {
+  font-size: 25px;
+  line-height: 1.25;
+  margin: 0;
+  letter-spacing: -.01em;
+  text-wrap: balance;
+}
+
+.top__en {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--ink-soft);
+  font-size: 16px;
+  margin: 0;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  font-size: 13px;
+  color: var(--ink-faint);
+  margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.pill {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-radius: 4px;
+  padding: 2px 8px;
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .02em;
+}
+
+/* ---------- 單元切換（線上版） ---------- */
+
+.switcher {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin-bottom: 16px;
+  padding-bottom: 2px;
+}
+.switcher::-webkit-scrollbar { display: none; }
+
+.switcher__btn {
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  min-height: 40px;
+}
+.switcher__btn[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+  font-weight: 600;
+}
+
+/* ---------- 關卡分頁 ---------- */
+
+.tabs {
+  display: flex;
+  gap: 2px;
+  background: var(--surface-2);
+  border-radius: 10px;
+  padding: 3px;
+  margin-bottom: 18px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  position: sticky;
+  top: 6px;
+  z-index: 20;
+  box-shadow: var(--shadow);
+}
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab {
+  flex: 1 0 auto;
+  border: 0;
+  background: transparent;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 14px;
+  padding: 9px 11px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  min-height: 42px;
+}
+.tab b {
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-faint);
+  font-weight: 600;
+  margin-right: 3px;
+}
+.tab[aria-selected="true"] {
+  background: var(--surface);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: var(--shadow);
+}
+.tab[aria-selected="true"] b { color: var(--accent); }
+
+.panel { display: none; }
+.panel.is-active { display: flex; flex-direction: column; gap: 14px; }
+
+.panel__intro {
+  color: var(--ink-soft);
+  font-size: 14px;
+  margin: 0;
+}
+
+/* ---------- 通用元件 ---------- */
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  box-shadow: var(--shadow);
+}
+
+.center { text-align: center; }
+
+.btn {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  min-height: 40px;
+}
+.btn:hover { border-color: var(--accent); color: var(--accent); }
+.btn.is-on {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--surface);
+  font-weight: 600;
+}
+.btn:disabled { opacity: .4; cursor: default; }
+
+.btn--big {
+  width: 100%;
+  padding: 18px;
+  font-size: 17px;
+  font-weight: 600;
+  border-radius: var(--radius);
+  min-height: 56px;
+}
+
+.btn--play {
+  padding: 0;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  min-height: 44px;
+  font-size: 15px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.controls__label {
+  font-size: 13px;
+  color: var(--ink-faint);
+}
+
+.status {
+  font-size: 14px;
+  color: var(--ink-soft);
+  min-height: 21px;
+  margin: 0;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.bar {
+  height: 5px;
+  background: var(--surface-2);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.bar__fill {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  border-radius: 999px;
+}
+.bar__fill--you { background: var(--voice-b); }
+
+.hint {
+  font-size: 13px;
+  color: var(--ink-faint);
+  text-align: center;
+  margin: 0;
+}
+
+/* ---------- 1 盲聽 ---------- */
+
+.blind__hint {
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: 15px;
+  margin: 0;
+}
+
+.scene-box {
+  background: var(--surface-2);
+  border-radius: var(--radius);
+  padding: 13px 15px;
+  font-size: 15px;
+}
+
+/* ---------- 2 逐句對照 ---------- */
+
+.line {
+  display: grid;
+  grid-template-columns: 62px 1fr;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+.line:first-child { padding-top: 2px; }
+.line:last-child { border-bottom: 0; padding-bottom: 2px; }
+.line.is-current { background: var(--accent-soft); border-radius: 8px; padding-left: 8px; }
+
+.line__role {
+  font-size: 11px;
+  font-weight: 700;
+  padding-top: 6px;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+.line__role--A { color: var(--voice-a); }
+.line__role--B { color: var(--voice-b); }
+
+.line__en {
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.5;
+}
+.line__zh { font-size: 14px; color: var(--ink-soft); margin-top: 3px; }
+.line__zh[hidden] { display: none; }
+
+.line__tools { display: flex; gap: 6px; margin-top: 8px; }
+
+/* ---------- 3 單字卡 ---------- */
+
+.words { display: grid; gap: 10px; }
+
+.word__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.word__term {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 600;
+}
+.word__pos { font-size: 13px; color: var(--ink-faint); font-style: italic; }
+.word__zh { font-size: 15px; color: var(--ink-soft); }
+
+.word__ex {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.word__ex-text { font-family: var(--serif); font-size: 16px; }
+.word__ex-zh { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+
+/* ---------- 4 跟讀 / 5 角色扮演 ---------- */
+
+.stage {
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+.stage__role {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+.stage__en {
+  font-family: var(--serif);
+  font-size: 22px;
+  line-height: 1.45;
+  text-wrap: balance;
+}
+.stage__zh { font-size: 15px; color: var(--ink-soft); }
+.stage__cue {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--voice-b);
+  background: var(--you-soft);
+  border-radius: 999px;
+  padding: 4px 14px;
+}
+.stage__idle { color: var(--ink-faint); font-size: 15px; margin: 0; }
+
+/* ---------- 提醒 ---------- */
+
+.tips { margin-top: 26px; }
+.tips h2 {
+  font-size: 12px;
+  margin: 0 0 10px;
+  color: var(--ink-faint);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.tips ul { margin: 0; padding-left: 20px; }
+.tips li { margin-bottom: 8px; font-size: 15px; }
+
+/* ---------- 總目錄頁 ---------- */
+
+.units { display: grid; gap: 10px; }
+
+.unit-card {
+  display: block;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 15px 17px;
+  text-decoration: none;
+  color: inherit;
+  box-shadow: var(--shadow);
+}
+.unit-card:hover { border-color: var(--accent); }
+.unit-card__title { font-size: 17px; font-weight: 650; }
+.unit-card__en {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-faint);
+  margin-top: 1px;
+}
+.unit-card__scene { font-size: 14px; color: var(--ink-soft); margin-top: 8px; }
+.unit-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--ink-faint);
+  margin-top: 11px;
+  font-variant-numeric: tabular-nums;
+}
+.unit-card__date { margin-left: auto; }
+
+.empty { color: var(--ink-soft); }
+
+.howto { margin-top: 28px; font-size: 14px; color: var(--ink-soft); }
+.howto code {
+  background: var(--surface-2);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+/* 單字卡專用樣式，疊在 player.css 之上。
+ * 熟練度沿用同一套語意色：不會=赭黃（要練的東西都是赭黃）、有印象=中性、熟了=青。
+ */
+
+/* 帶文字的播放鈕：會自動撐寬，不像 .btn--play 是固定 44×44 的方形圖示鈕 */
+.btn--audio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  height: 44px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.btn--audio .btn__icon { font-size: 12px; line-height: 1; }
+.btn--audio:hover { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+
+.btn--play .btn__icon { line-height: 1; }
+
+.mode-row { display: flex; gap: 6px; margin-bottom: 16px; }
+
+.mode-btn {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 9px;
+  cursor: pointer;
+  min-height: 44px;
+}
+.mode-btn[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+  font-weight: 600;
+}
+
+/* ---------- 音節顯示 ---------- */
+
+/* 單字本身：原樣呈現，不切開 */
+.term {
+  font-family: var(--serif);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.syls {
+  font-family: var(--serif);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+  line-height: 1.25;
+}
+.syl { }
+
+/* 重音節只用顏色標，不改大小寫、不加粗——字體一致，讀起來才不會跳。
+ * 重音位置在音標裡也有 ˈ 記號，這裡是輔助不是唯一來源。 */
+.syl--stress { color: var(--voice-a); }
+.syl-dot {
+  color: var(--ink-faint);
+  font-size: .62em;
+  padding: 0 .18em;
+  transform: translateY(-.12em);
+}
+
+.ipa {
+  font-family: var(--serif);
+  color: var(--ink-soft);
+  font-variant-numeric: normal;
+}
+
+/* ---------- 字卡 ---------- */
+
+.fc { display: flex; flex-direction: column; gap: 14px; }
+
+.fc__stats {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+.fc__chip {
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-weight: 600;
+}
+.fc__chip--0 { background: var(--you-soft); color: var(--voice-b); }
+.fc__chip--1 { background: var(--surface-2); color: var(--ink-soft); }
+.fc__chip--2 { background: var(--accent-soft); color: var(--accent); }
+.fc__remain { margin-left: auto; }
+
+.fc__card {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+  cursor: pointer;
+  padding: 26px 20px;
+}
+.fc__card .term { font-size: 34px; font-weight: 600; }
+.fc__card .syls { font-size: 21px; color: var(--ink-soft); }
+
+.fc__tap { font-size: 13px; color: var(--ink-faint); margin: 0; }
+
+.fc__back {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+.fc__back[hidden] { display: none; }
+
+.fc__ipa { font-size: 18px; }
+.fc__pos { font-size: 13px; color: var(--ink-faint); font-style: italic; margin-left: 8px; }
+.fc__zh { font-size: 20px; font-weight: 600; }
+
+.fc__ex {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  text-align: left;
+  background: var(--surface-2);
+  border-radius: 10px;
+  padding: 11px 13px;
+  width: 100%;
+}
+.fc__ex-en { font-family: var(--serif); font-size: 16px; }
+.fc__ex-zh { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+
+.fc__levels { display: flex; gap: 8px; }
+.fc__levels[hidden] { display: none; }
+
+.lv {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  min-height: 52px;
+}
+.lv small {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+.lv--0:hover { border-color: var(--voice-b); color: var(--voice-b); }
+.lv--2:hover { border-color: var(--accent); color: var(--accent); }
+
+.fc__done {
+  text-align: center;
+  color: var(--ink-soft);
+  padding: 40px 0;
+}
+
+/* ---------- 列表 ---------- */
+
+.wb-list { display: grid; gap: 10px; }
+
+.wb-item { display: flex; gap: 12px; align-items: flex-start; }
+.wb-item__body { flex: 1; min-width: 0; }
+.wb-item .term { font-size: 20px; font-weight: 600; }
+.wb-item .syls { justify-content: flex-start; font-size: 15px; }
+
+.wb-item__breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin-top: 3px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.wb-item__zh { font-size: 15px; margin-top: 6px; }
+.wb-item__pos { font-size: 12px; color: var(--ink-faint); font-style: italic; margin-left: 6px; }
+.wb-item__ex {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.lvdot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  margin-top: 8px;
+}
+.lvdot--0 { background: var(--voice-b); }
+.lvdot--1 { background: var(--ink-faint); }
+.lvdot--2 { background: var(--accent); }
+.lvdot--none { background: var(--line); }
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <a class="top__back" href="../index.html">← 回目錄</a>
+    <h1 class="top__title">多益單字卡</h1>
+    <p class="top__en">TOEIC Vocabulary Flashcards</p>
+    <div class="meta" id="bank-meta"></div>
+  </header>
+  <div id="app"></div>
+  <p class="hint" style="margin-top:28px">熟練度記在這台裝置上。</p>
+</div>
+<script id="bank-data" type="application/json">[{"title": "多益核心單字", "title_en": "TOEIC Core Vocabulary", "themes": [{"slug": "office", "name": "辦公室與行政", "words": [{"term": "agenda", "pos": "n.", "zh": "議程", "example_en": "Please review the agenda before the meeting.", "example_zh": "請在會議前看過議程。", "syllables": ["a", "gen", "da"], "stress": 1, "ipa": "əˈdʒɛn.də", "audio": "audio/office-01-w.m4a", "example_audio": "audio/office-01-e.m4a"}, {"term": "attachment", "pos": "n.", "zh": "附件", "example_en": "I forgot to include the attachment.", "example_zh": "我忘了附上附件。", "syllables": ["at", "tach", "ment"], "stress": 1, "ipa": "əˈtætʃ.mənt", "audio": "audio/office-02-w.m4a", "example_audio": "audio/office-02-e.m4a"}, {"term": "deadline", "pos": "n.", "zh": "截止期限", "example_en": "The deadline has been moved to Friday.", "example_zh": "期限已經改到週五。", "syllables": ["dead", "line"], "stress": 0, "ipa": "ˈdɛdˌlaɪn", "audio": "audio/office-03-w.m4a", "example_audio": "audio/office-03-e.m4a"}, {"term": "memo", "pos": "n.", "zh": "內部通知、備忘錄", "example_en": "A memo was sent to all departments.", "example_zh": "已發通知給所有部門。", "syllables": ["mem", "o"], "stress": 0, "ipa": "ˈmɛˌmoʊ", "audio": "audio/office-04-w.m4a", "example_audio": "audio/office-04-e.m4a"}, {"term": "confidential", "pos": "adj.", "zh": "機密的", "example_en": "This file is strictly confidential.", "example_zh": "這份檔案是機密的。", "syllables": ["con", "fi", "den", "tial"], "stress": 2, "ipa": "ˌkɑn.fəˈdɛn.ʃəl", "audio": "audio/office-05-w.m4a", "example_audio": "audio/office-05-e.m4a"}, {"term": "forward", "pos": "v.", "zh": "轉寄", "example_en": "Could you forward that email to me?", "example_zh": "可以把那封信轉寄給我嗎？", "syllables": ["for", "ward"], "stress": 0, "ipa": "ˈfɔr.wərd", "audio": "audio/office-06-w.m4a", "example_audio": "audio/office-06-e.m4a"}, {"term": "postpone", "pos": "v.", "zh": "延期", "example_en": "We had to postpone the launch.", "example_zh": "我們只好把發表會延期。", "syllables": ["post", "pone"], "stress": 1, "ipa": "poʊstˈpoʊn", "audio": "audio/office-07-w.m4a", "example_audio": "audio/office-07-e.m4a"}, {"term": "draft", "pos": "n.", "zh": "草稿", "example_en": "Send me a rough draft by noon.", "example_zh": "中午前給我一份草稿。", "syllables": ["draft"], "stress": 0, "ipa": "ˈdræft", "audio": "audio/office-08-w.m4a", "example_audio": "audio/office-08-e.m4a"}, {"term": "stationery", "pos": "n.", "zh": "文具", "example_en": "We're running low on stationery.", "example_zh": "我們的文具快用完了。", "syllables": ["sta", "tio", "ne", "ry"], "stress": 0, "ipa": "ˈsteɪ.ʃəˌnɛ.ri", "audio": "audio/office-09-w.m4a", "example_audio": "audio/office-09-e.m4a"}, {"term": "duplicate", "pos": "n.", "zh": "副本、複本", "example_en": "Keep a duplicate for your records.", "example_zh": "留一份副本存檔。", "syllables": ["du", "pli", "cate"], "stress": 0, "ipa": "ˈdu.plə.kət", "audio": "audio/office-10-w.m4a", "example_audio": "audio/office-10-e.m4a"}, {"term": "workload", "pos": "n.", "zh": "工作量", "example_en": "My workload has doubled this month.", "example_zh": "我這個月的工作量翻倍了。", "syllables": ["work", "load"], "stress": 0, "ipa": "ˈwɜrˌkloʊd", "audio": "audio/office-11-w.m4a", "example_audio": "audio/office-11-e.m4a"}, {"term": "urgent", "pos": "adj.", "zh": "緊急的", "example_en": "This request is urgent.", "example_zh": "這件事很緊急。", "syllables": ["ur", "gent"], "stress": 0, "ipa": "ˈɜr.dʒənt", "audio": "audio/office-12-w.m4a", "example_audio": "audio/office-12-e.m4a"}]}, {"slug": "meetings", "name": "會議與簡報", "words": [{"term": "minutes", "pos": "n.", "zh": "會議記錄", "example_en": "Who is taking the minutes today?", "example_zh": "今天誰做會議記錄？", "syllables": ["min", "utes"], "stress": 0, "ipa": "ˈmɪ.nəts", "audio": "audio/meetings-01-w.m4a", "example_audio": "audio/meetings-01-e.m4a"}, {"term": "attendee", "pos": "n.", "zh": "與會者", "example_en": "We expect about thirty attendees.", "example_zh": "預計大約三十位與會者。", "syllables": ["at", "ten", "dee"], "stress": 1, "ipa": "əˈtɛnˈdi", "audio": "audio/meetings-02-w.m4a", "example_audio": "audio/meetings-02-e.m4a"}, {"term": "presentation", "pos": "n.", "zh": "簡報", "example_en": "Her presentation was very clear.", "example_zh": "她的簡報講得很清楚。", "syllables": ["pre", "sen", "ta", "tion"], "stress": 2, "ipa": "ˌprɛ.zənˈteɪ.ʃən", "audio": "audio/meetings-03-w.m4a", "example_audio": "audio/meetings-03-e.m4a"}, {"term": "handout", "pos": "n.", "zh": "講義、書面資料", "example_en": "Please take a handout from the table.", "example_zh": "請到桌上拿一份講義。", "syllables": ["hand", "out"], "stress": 0, "ipa": "ˈhænˌdaʊt", "audio": "audio/meetings-04-w.m4a", "example_audio": "audio/meetings-04-e.m4a"}, {"term": "venue", "pos": "n.", "zh": "場地", "example_en": "We need a bigger venue.", "example_zh": "我們需要更大的場地。", "syllables": ["ve", "nue"], "stress": 0, "ipa": "ˈvɛn.ju", "audio": "audio/meetings-05-w.m4a", "example_audio": "audio/meetings-05-e.m4a"}, {"term": "summarize", "pos": "v.", "zh": "總結", "example_en": "Could you summarize the main points?", "example_zh": "可以總結一下重點嗎？", "syllables": ["sum", "ma", "rize"], "stress": 0, "ipa": "ˈsʌ.mərˌaɪz", "audio": "audio/meetings-06-w.m4a", "example_audio": "audio/meetings-06-e.m4a"}, {"term": "clarify", "pos": "v.", "zh": "釐清、說明清楚", "example_en": "Let me clarify what I meant.", "example_zh": "讓我把我的意思講清楚。", "syllables": ["clar", "i", "fy"], "stress": 0, "ipa": "ˈklɛ.rəˌfaɪ", "audio": "audio/meetings-07-w.m4a", "example_audio": "audio/meetings-07-e.m4a"}, {"term": "reschedule", "pos": "v.", "zh": "改期", "example_en": "Can we reschedule for next week?", "example_zh": "可以改到下週嗎？", "syllables": ["res", "che", "dule"], "stress": 1, "ipa": "riˈskɛ.dʒul", "audio": "audio/meetings-08-w.m4a", "example_audio": "audio/meetings-08-e.m4a"}, {"term": "consensus", "pos": "n.", "zh": "共識", "example_en": "We reached a consensus quickly.", "example_zh": "我們很快就有共識了。", "syllables": ["con", "sen", "sus"], "stress": 1, "ipa": "kənˈsɛn.səs", "audio": "audio/meetings-09-w.m4a", "example_audio": "audio/meetings-09-e.m4a"}, {"term": "quarterly", "pos": "adj.", "zh": "每季的", "example_en": "The quarterly report is due tomorrow.", "example_zh": "季報明天到期。", "syllables": ["quar", "ter", "ly"], "stress": 0, "ipa": "ˈkwɔr.tər.li", "audio": "audio/meetings-10-w.m4a", "example_audio": "audio/meetings-10-e.m4a"}, {"term": "brief", "pos": "v.", "zh": "簡短說明狀況", "example_en": "I'll brief the team this afternoon.", "example_zh": "我下午跟團隊說明狀況。", "syllables": ["brief"], "stress": 0, "ipa": "ˈbrif", "audio": "audio/meetings-11-w.m4a", "example_audio": "audio/meetings-11-e.m4a"}, {"term": "objective", "pos": "n.", "zh": "目標", "example_en": "Our main objective is cost control.", "example_zh": "我們的主要目標是控制成本。", "syllables": ["ob", "jec", "tive"], "stress": 1, "ipa": "əbˈdʒɛk.tɪv", "audio": "audio/meetings-12-w.m4a", "example_audio": "audio/meetings-12-e.m4a"}]}, {"slug": "hr", "name": "人事與招募", "words": [{"term": "applicant", "pos": "n.", "zh": "應徵者", "example_en": "We received over two hundred applicants.", "example_zh": "我們收到兩百多位應徵者。", "syllables": ["ap", "pli", "cant"], "stress": 0, "ipa": "ˈæ.plɪ.kənt", "audio": "audio/hr-01-w.m4a", "example_audio": "audio/hr-01-e.m4a"}, {"term": "resume", "pos": "n.", "zh": "履歷", "example_en": "Attach your resume to the email.", "example_zh": "把履歷附在信裡。", "syllables": ["re", "sume"], "stress": 1, "ipa": "rɪˈzum", "audio": "audio/hr-02-w.m4a", "example_audio": "audio/hr-02-e.m4a"}, {"term": "candidate", "pos": "n.", "zh": "人選、候選人", "example_en": "She is the strongest candidate.", "example_zh": "她是最強的人選。", "syllables": ["can", "di", "date"], "stress": 0, "ipa": "ˈkæn.də.deɪt", "audio": "audio/hr-03-w.m4a", "example_audio": "audio/hr-03-e.m4a"}, {"term": "supervisor", "pos": "n.", "zh": "主管", "example_en": "Ask your supervisor to approve it.", "example_zh": "請你主管核准。", "syllables": ["su", "per", "vi", "sor"], "stress": 0, "ipa": "ˈsu.pərˌvaɪ.zər", "audio": "audio/hr-04-w.m4a", "example_audio": "audio/hr-04-e.m4a"}, {"term": "promotion", "pos": "n.", "zh": "升遷", "example_en": "He got a promotion last month.", "example_zh": "他上個月升職了。", "syllables": ["pro", "mo", "tion"], "stress": 1, "ipa": "prəˈmoʊ.ʃən", "audio": "audio/hr-05-w.m4a", "example_audio": "audio/hr-05-e.m4a"}, {"term": "benefits", "pos": "n.", "zh": "福利", "example_en": "The benefits include health insurance.", "example_zh": "福利包含健康保險。", "syllables": ["ben", "e", "fits"], "stress": 0, "ipa": "ˈbɛ.nə.fɪts", "audio": "audio/hr-06-w.m4a", "example_audio": "audio/hr-06-e.m4a"}, {"term": "payroll", "pos": "n.", "zh": "薪資（名冊）", "example_en": "Payroll is processed on the fifth.", "example_zh": "薪資在五號處理。", "syllables": ["pay", "roll"], "stress": 0, "ipa": "ˈpeɪˌroʊl", "audio": "audio/hr-07-w.m4a", "example_audio": "audio/hr-07-e.m4a"}, {"term": "probation", "pos": "n.", "zh": "試用期", "example_en": "New hires have a three-month probation.", "example_zh": "新進人員有三個月試用期。", "syllables": ["pro", "ba", "tion"], "stress": 1, "ipa": "proʊˈbeɪ.ʃən", "audio": "audio/hr-08-w.m4a", "example_audio": "audio/hr-08-e.m4a"}, {"term": "recruit", "pos": "v.", "zh": "招募", "example_en": "We plan to recruit five engineers.", "example_zh": "我們打算招五名工程師。", "syllables": ["re", "cruit"], "stress": 1, "ipa": "rəˈkrut", "audio": "audio/hr-09-w.m4a", "example_audio": "audio/hr-09-e.m4a"}, {"term": "qualification", "pos": "n.", "zh": "資格條件", "example_en": "He meets every qualification.", "example_zh": "他符合所有條件。", "syllables": ["qual", "i", "fi", "ca", "tion"], "stress": 3, "ipa": "ˌkwɑ.lə.fəˈkeɪ.ʃən", "audio": "audio/hr-10-w.m4a", "example_audio": "audio/hr-10-e.m4a"}, {"term": "resign", "pos": "v.", "zh": "辭職", "example_en": "She resigned without notice.", "example_zh": "她沒預告就辭職了。", "syllables": ["re", "sign"], "stress": 1, "ipa": "rɪˈzaɪn", "audio": "audio/hr-11-w.m4a", "example_audio": "audio/hr-11-e.m4a"}, {"term": "overtime", "pos": "n.", "zh": "加班", "example_en": "We're not paid for overtime.", "example_zh": "我們加班沒有加班費。", "syllables": ["o", "ver", "time"], "stress": 0, "ipa": "ˈoʊ.vərˌtaɪm", "audio": "audio/hr-12-w.m4a", "example_audio": "audio/hr-12-e.m4a"}]}, {"slug": "finance", "name": "財務與帳務", "words": [{"term": "invoice", "pos": "n.", "zh": "請款單、發票", "example_en": "Please send the invoice by Friday.", "example_zh": "請在週五前寄出請款單。", "syllables": ["in", "voice"], "stress": 0, "ipa": "ˈɪn.vɔɪs", "audio": "audio/finance-01-w.m4a", "example_audio": "audio/finance-01-e.m4a"}, {"term": "receipt", "pos": "n.", "zh": "收據", "example_en": "Keep the receipt for reimbursement.", "example_zh": "收據留著報帳用。", "syllables": ["re", "ceipt"], "stress": 1, "ipa": "rɪˈsit", "audio": "audio/finance-02-w.m4a", "example_audio": "audio/finance-02-e.m4a"}, {"term": "expense", "pos": "n.", "zh": "費用、支出", "example_en": "Travel expenses are covered.", "example_zh": "差旅費用公司負擔。", "syllables": ["ex", "pense"], "stress": 1, "ipa": "ɪkˈspɛns", "audio": "audio/finance-03-w.m4a", "example_audio": "audio/finance-03-e.m4a"}, {"term": "budget", "pos": "n.", "zh": "預算", "example_en": "That's outside our budget.", "example_zh": "那超出我們的預算。", "syllables": ["bud", "get"], "stress": 0, "ipa": "ˈbʌ.dʒɪt", "audio": "audio/finance-04-w.m4a", "example_audio": "audio/finance-04-e.m4a"}, {"term": "reimbursement", "pos": "n.", "zh": "報帳、核銷", "example_en": "Reimbursement takes about two weeks.", "example_zh": "核銷大約要兩週。", "syllables": ["re", "im", "burse", "ment"], "stress": 2, "ipa": "ˌri.ɪmˈbɜr.smənt", "audio": "audio/finance-05-w.m4a", "example_audio": "audio/finance-05-e.m4a"}, {"term": "revenue", "pos": "n.", "zh": "營收", "example_en": "Revenue grew by twelve percent.", "example_zh": "營收成長了百分之十二。", "syllables": ["re", "ve", "nue"], "stress": 0, "ipa": "ˈrɛ.vəˌnu", "audio": "audio/finance-06-w.m4a", "example_audio": "audio/finance-06-e.m4a"}, {"term": "deposit", "pos": "n.", "zh": "訂金、押金", "example_en": "A deposit is required in advance.", "example_zh": "需要先付訂金。", "syllables": ["de", "po", "sit"], "stress": 1, "ipa": "dəˈpɑ.zɪt", "audio": "audio/finance-07-w.m4a", "example_audio": "audio/finance-07-e.m4a"}, {"term": "refund", "pos": "n.", "zh": "退款", "example_en": "You can request a full refund.", "example_zh": "你可以申請全額退款。", "syllables": ["re", "fund"], "stress": 1, "ipa": "rɪˈfʌnd", "audio": "audio/finance-08-w.m4a", "example_audio": "audio/finance-08-e.m4a"}, {"term": "installment", "pos": "n.", "zh": "分期付款", "example_en": "We pay in three installments.", "example_zh": "我們分三期付款。", "syllables": ["in", "stall", "ment"], "stress": 1, "ipa": "ˌɪnˈstɔl.mənt", "audio": "audio/finance-09-w.m4a", "example_audio": "audio/finance-09-e.m4a"}, {"term": "audit", "pos": "n.", "zh": "稽核", "example_en": "The annual audit starts Monday.", "example_zh": "年度稽核週一開始。", "syllables": ["au", "dit"], "stress": 0, "ipa": "ˈɔ.dɪt", "audio": "audio/finance-10-w.m4a", "example_audio": "audio/finance-10-e.m4a"}, {"term": "overdue", "pos": "adj.", "zh": "逾期的", "example_en": "Your payment is two weeks overdue.", "example_zh": "你的款項逾期兩週了。", "syllables": ["o", "ver", "due"], "stress": 0, "ipa": "ˈoʊ.vərˈdu", "audio": "audio/finance-11-w.m4a", "example_audio": "audio/finance-11-e.m4a"}, {"term": "discount", "pos": "n.", "zh": "折扣", "example_en": "They offered a ten percent discount.", "example_zh": "他們給了九折。", "syllables": ["dis", "count"], "stress": 1, "ipa": "dɪˈskaʊnt", "audio": "audio/finance-12-w.m4a", "example_audio": "audio/finance-12-e.m4a"}]}, {"slug": "purchasing", "name": "採購與合約", "words": [{"term": "supplier", "pos": "n.", "zh": "供應商", "example_en": "We switched to a cheaper supplier.", "example_zh": "我們換了比較便宜的供應商。", "syllables": ["sup", "pli", "er"], "stress": 1, "ipa": "səˈplaɪ.ər", "audio": "audio/purchasing-01-w.m4a", "example_audio": "audio/purchasing-01-e.m4a"}, {"term": "quotation", "pos": "n.", "zh": "報價單", "example_en": "Could you send us a quotation?", "example_zh": "可以給我們一份報價嗎？", "syllables": ["quo", "ta", "tion"], "stress": 1, "ipa": "kwoʊˈteɪ.ʃən", "audio": "audio/purchasing-02-w.m4a", "example_audio": "audio/purchasing-02-e.m4a"}, {"term": "negotiate", "pos": "v.", "zh": "談判、議價", "example_en": "We managed to negotiate a better price.", "example_zh": "我們談到了更好的價格。", "syllables": ["ne", "go", "ti", "ate"], "stress": 1, "ipa": "nəˈɡoʊ.ʃiˌeɪt", "audio": "audio/purchasing-03-w.m4a", "example_audio": "audio/purchasing-03-e.m4a"}, {"term": "contract", "pos": "n.", "zh": "合約", "example_en": "The contract expires in June.", "example_zh": "合約六月到期。", "syllables": ["con", "tract"], "stress": 0, "ipa": "ˈkɑnˌtrækt", "audio": "audio/purchasing-04-w.m4a", "example_audio": "audio/purchasing-04-e.m4a"}, {"term": "renew", "pos": "v.", "zh": "續約、更新", "example_en": "We decided not to renew the contract.", "example_zh": "我們決定不續約。", "syllables": ["re", "new"], "stress": 1, "ipa": "rɪˈnu", "audio": "audio/purchasing-05-w.m4a", "example_audio": "audio/purchasing-05-e.m4a"}, {"term": "warranty", "pos": "n.", "zh": "保固", "example_en": "The warranty covers two years.", "example_zh": "保固期兩年。", "syllables": ["war", "ran", "ty"], "stress": 0, "ipa": "ˈwɔ.rən.ti", "audio": "audio/purchasing-06-w.m4a", "example_audio": "audio/purchasing-06-e.m4a"}, {"term": "vendor", "pos": "n.", "zh": "廠商", "example_en": "Three vendors submitted bids.", "example_zh": "三家廠商投標。", "syllables": ["ven", "dor"], "stress": 0, "ipa": "ˈvɛn.dər", "audio": "audio/purchasing-07-w.m4a", "example_audio": "audio/purchasing-07-e.m4a"}, {"term": "specification", "pos": "n.", "zh": "規格", "example_en": "The part must match the specification.", "example_zh": "零件必須符合規格。", "syllables": ["spec", "i", "fi", "ca", "tion"], "stress": 3, "ipa": "ˌspɛ.sɪ.fɪˈkeɪ.ʃən", "audio": "audio/purchasing-08-w.m4a", "example_audio": "audio/purchasing-08-e.m4a"}, {"term": "approve", "pos": "v.", "zh": "核准", "example_en": "The manager has to approve the order.", "example_zh": "訂單要經理核准。", "syllables": ["ap", "prove"], "stress": 1, "ipa": "əˈpruv", "audio": "audio/purchasing-09-w.m4a", "example_audio": "audio/purchasing-09-e.m4a"}, {"term": "bid", "pos": "n.", "zh": "投標、報價", "example_en": "Their bid was the lowest.", "example_zh": "他們的報價最低。", "syllables": ["bid"], "stress": 0, "ipa": "ˈbɪd", "audio": "audio/purchasing-10-w.m4a", "example_audio": "audio/purchasing-10-e.m4a"}, {"term": "clause", "pos": "n.", "zh": "條款", "example_en": "Read the cancellation clause carefully.", "example_zh": "仔細看取消條款。", "syllables": ["clause"], "stress": 0, "ipa": "ˈklɔz", "audio": "audio/purchasing-11-w.m4a", "example_audio": "audio/purchasing-11-e.m4a"}, {"term": "compliance", "pos": "n.", "zh": "合規、遵守規定", "example_en": "Compliance is checked every quarter.", "example_zh": "合規每季查核一次。", "syllables": ["com", "pli", "ance"], "stress": 1, "ipa": "kəmˈplaɪ.əns", "audio": "audio/purchasing-12-w.m4a", "example_audio": "audio/purchasing-12-e.m4a"}]}, {"slug": "logistics", "name": "物流與庫存", "words": [{"term": "inventory", "pos": "n.", "zh": "庫存", "example_en": "We take inventory every month.", "example_zh": "我們每個月盤點庫存。", "syllables": ["in", "ven", "to", "ry"], "stress": 2, "ipa": "ˌɪn.vənˈtɔ.ri", "audio": "audio/logistics-01-w.m4a", "example_audio": "audio/logistics-01-e.m4a"}, {"term": "warehouse", "pos": "n.", "zh": "倉庫", "example_en": "The goods are still in the warehouse.", "example_zh": "貨還在倉庫裡。", "syllables": ["ware", "house"], "stress": 0, "ipa": "ˈwɛrˌhaʊs", "audio": "audio/logistics-02-w.m4a", "example_audio": "audio/logistics-02-e.m4a"}, {"term": "shipment", "pos": "n.", "zh": "出貨、一批貨", "example_en": "The shipment arrives on Thursday.", "example_zh": "貨週四到。", "syllables": ["ship", "ment"], "stress": 0, "ipa": "ˈʃɪp.mənt", "audio": "audio/logistics-03-w.m4a", "example_audio": "audio/logistics-03-e.m4a"}, {"term": "freight", "pos": "n.", "zh": "貨運、運費", "example_en": "Freight costs went up again.", "example_zh": "運費又漲了。", "syllables": ["freight"], "stress": 0, "ipa": "ˈfreɪt", "audio": "audio/logistics-04-w.m4a", "example_audio": "audio/logistics-04-e.m4a"}, {"term": "defective", "pos": "adj.", "zh": "有瑕疵的", "example_en": "Two units were defective.", "example_zh": "有兩台是瑕疵品。", "syllables": ["de", "fec", "tive"], "stress": 1, "ipa": "dɪˈfɛk.tɪv", "audio": "audio/logistics-05-w.m4a", "example_audio": "audio/logistics-05-e.m4a"}, {"term": "packaging", "pos": "n.", "zh": "包裝", "example_en": "The packaging was damaged.", "example_zh": "包裝破損了。", "syllables": ["pack", "ag", "ing"], "stress": 0, "ipa": "ˈpæ.kɪ.dʒɪŋ", "audio": "audio/logistics-06-w.m4a", "example_audio": "audio/logistics-06-e.m4a"}, {"term": "restock", "pos": "v.", "zh": "補貨", "example_en": "We restock every Monday.", "example_zh": "我們每週一補貨。", "syllables": ["re", "stock"], "stress": 1, "ipa": "riˈstɑk", "audio": "audio/logistics-07-w.m4a", "example_audio": "audio/logistics-07-e.m4a"}, {"term": "courier", "pos": "n.", "zh": "快遞", "example_en": "Send it by courier, please.", "example_zh": "麻煩用快遞寄。", "syllables": ["couri", "er"], "stress": null, "ipa": "ˈkɜr.i.ər", "audio": "audio/logistics-08-w.m4a", "example_audio": "audio/logistics-08-e.m4a"}, {"term": "customs", "pos": "n.", "zh": "海關", "example_en": "The package is held at customs.", "example_zh": "包裹卡在海關。", "syllables": ["cus", "toms"], "stress": 0, "ipa": "ˈkʌ.stəmz", "audio": "audio/logistics-09-w.m4a", "example_audio": "audio/logistics-09-e.m4a"}, {"term": "delay", "pos": "n.", "zh": "延誤", "example_en": "There's a two-day delay.", "example_zh": "有兩天的延誤。", "syllables": ["de", "lay"], "stress": 1, "ipa": "dɪˈleɪ", "audio": "audio/logistics-10-w.m4a", "example_audio": "audio/logistics-10-e.m4a"}, {"term": "distributor", "pos": "n.", "zh": "經銷商", "example_en": "They are our distributor in Japan.", "example_zh": "他們是我們在日本的經銷商。", "syllables": ["dis", "trib", "u", "tor"], "stress": 1, "ipa": "dɪˈstrɪ.bjə.tər", "audio": "audio/logistics-11-w.m4a", "example_audio": "audio/logistics-11-e.m4a"}, {"term": "logistics", "pos": "n.", "zh": "物流", "example_en": "Logistics is handled by a third party.", "example_zh": "物流交給第三方處理。", "syllables": ["lo", "gis", "tics"], "stress": 1, "ipa": "ləˈdʒɪ.stɪks", "audio": "audio/logistics-12-w.m4a", "example_audio": "audio/logistics-12-e.m4a"}]}, {"slug": "travel", "name": "差旅與交通", "words": [{"term": "itinerary", "pos": "n.", "zh": "行程表", "example_en": "I'll email you the itinerary.", "example_zh": "我把行程表寄給你。", "syllables": ["i", "ti", "ne", "ra", "ry"], "stress": 1, "ipa": "aɪˈtɪ.nərˌɛ.ri", "audio": "audio/travel-01-w.m4a", "example_audio": "audio/travel-01-e.m4a"}, {"term": "reservation", "pos": "n.", "zh": "訂位、預約", "example_en": "I have a reservation under Ho.", "example_zh": "我有訂位，姓 Ho。", "syllables": ["re", "ser", "va", "tion"], "stress": 2, "ipa": "ˌrɛ.zərˈveɪ.ʃən", "audio": "audio/travel-02-w.m4a", "example_audio": "audio/travel-02-e.m4a"}, {"term": "layover", "pos": "n.", "zh": "轉機停留", "example_en": "We have a four-hour layover.", "example_zh": "我們要轉機停留四小時。", "syllables": ["lay", "over"], "stress": null, "ipa": "ˈleɪˌoʊ.vər", "audio": "audio/travel-03-w.m4a", "example_audio": "audio/travel-03-e.m4a"}, {"term": "accommodation", "pos": "n.", "zh": "住宿", "example_en": "Accommodation is arranged by the company.", "example_zh": "住宿由公司安排。", "syllables": ["ac", "com", "mo", "da", "tion"], "stress": 3, "ipa": "əˌkɑ.məˈdeɪ.ʃən", "audio": "audio/travel-04-w.m4a", "example_audio": "audio/travel-04-e.m4a"}, {"term": "shuttle", "pos": "n.", "zh": "接駁車", "example_en": "The hotel shuttle runs every hour.", "example_zh": "飯店接駁車每小時一班。", "syllables": ["shut", "tle"], "stress": 0, "ipa": "ˈʃʌ.təl", "audio": "audio/travel-05-w.m4a", "example_audio": "audio/travel-05-e.m4a"}, {"term": "departure", "pos": "n.", "zh": "出發、離站", "example_en": "Check the departure board.", "example_zh": "看一下出發看板。", "syllables": ["de", "par", "ture"], "stress": 1, "ipa": "dɪˈpɑr.tʃər", "audio": "audio/travel-06-w.m4a", "example_audio": "audio/travel-06-e.m4a"}, {"term": "confirmation", "pos": "n.", "zh": "確認（信）", "example_en": "Show them your confirmation email.", "example_zh": "把確認信給他們看。", "syllables": ["con", "fir", "ma", "tion"], "stress": 2, "ipa": "ˌkɑn.fərˈmeɪ.ʃən", "audio": "audio/travel-07-w.m4a", "example_audio": "audio/travel-07-e.m4a"}, {"term": "baggage", "pos": "n.", "zh": "行李", "example_en": "Baggage claim is downstairs.", "example_zh": "行李提領在樓下。", "syllables": ["bag", "gage"], "stress": 0, "ipa": "ˈbæ.ɡədʒ", "audio": "audio/travel-08-w.m4a", "example_audio": "audio/travel-08-e.m4a"}, {"term": "boarding", "pos": "n.", "zh": "登機", "example_en": "Boarding begins in ten minutes.", "example_zh": "十分鐘後開始登機。", "syllables": ["board", "ing"], "stress": 0, "ipa": "ˈbɔr.dɪŋ", "audio": "audio/travel-09-w.m4a", "example_audio": "audio/travel-09-e.m4a"}, {"term": "rental", "pos": "n.", "zh": "租賃、租車", "example_en": "I booked a car rental online.", "example_zh": "我在網路上訂了租車。", "syllables": ["ren", "tal"], "stress": 0, "ipa": "ˈrɛn.təl", "audio": "audio/travel-10-w.m4a", "example_audio": "audio/travel-10-e.m4a"}, {"term": "delegate", "pos": "n.", "zh": "代表", "example_en": "Ten delegates attended the conference.", "example_zh": "十位代表出席了會議。", "syllables": ["del", "e", "gate"], "stress": 0, "ipa": "ˈdɛ.ləˌɡeɪt", "audio": "audio/travel-11-w.m4a", "example_audio": "audio/travel-11-e.m4a"}, {"term": "allowance", "pos": "n.", "zh": "津貼", "example_en": "The daily allowance is fifty dollars.", "example_zh": "每日津貼是五十元。", "syllables": ["al", "lo", "wance"], "stress": 1, "ipa": "əˈlaʊ.əns", "audio": "audio/travel-12-w.m4a", "example_audio": "audio/travel-12-e.m4a"}]}, {"slug": "marketing", "name": "行銷與客戶", "words": [{"term": "campaign", "pos": "n.", "zh": "行銷活動", "example_en": "The campaign starts next month.", "example_zh": "行銷活動下個月開跑。", "syllables": ["cam", "paign"], "stress": 1, "ipa": "kæmˈpeɪn", "audio": "audio/marketing-01-w.m4a", "example_audio": "audio/marketing-01-e.m4a"}, {"term": "brochure", "pos": "n.", "zh": "宣傳手冊", "example_en": "Take a brochure on your way out.", "example_zh": "出去時拿一份手冊。", "syllables": ["bro", "chure"], "stress": 1, "ipa": "broʊˈʃʊr", "audio": "audio/marketing-02-w.m4a", "example_audio": "audio/marketing-02-e.m4a"}, {"term": "survey", "pos": "n.", "zh": "問卷調查", "example_en": "We sent a survey to all customers.", "example_zh": "我們發問卷給所有客戶。", "syllables": ["sur", "vey"], "stress": 1, "ipa": "sərˈveɪ", "audio": "audio/marketing-03-w.m4a", "example_audio": "audio/marketing-03-e.m4a"}, {"term": "feedback", "pos": "n.", "zh": "意見回饋", "example_en": "The feedback has been positive.", "example_zh": "回饋一直都很正面。", "syllables": ["feed", "back"], "stress": 0, "ipa": "ˈfidˌbæk", "audio": "audio/marketing-04-w.m4a", "example_audio": "audio/marketing-04-e.m4a"}, {"term": "complaint", "pos": "n.", "zh": "客訴、抱怨", "example_en": "We received a complaint about delivery.", "example_zh": "我們收到一件關於配送的客訴。", "syllables": ["com", "plaint"], "stress": 1, "ipa": "kəmˈpleɪnt", "audio": "audio/marketing-05-w.m4a", "example_audio": "audio/marketing-05-e.m4a"}, {"term": "subscription", "pos": "n.", "zh": "訂閱", "example_en": "Your subscription expires today.", "example_zh": "你的訂閱今天到期。", "syllables": ["sub", "scrip", "tion"], "stress": 1, "ipa": "səbˈskrɪp.ʃən", "audio": "audio/marketing-06-w.m4a", "example_audio": "audio/marketing-06-e.m4a"}, {"term": "launch", "pos": "v.", "zh": "推出（產品）", "example_en": "We launch the new model in May.", "example_zh": "我們五月推出新機型。", "syllables": ["launch"], "stress": 0, "ipa": "ˈlɔntʃ", "audio": "audio/marketing-07-w.m4a", "example_audio": "audio/marketing-07-e.m4a"}, {"term": "competitor", "pos": "n.", "zh": "競爭對手", "example_en": "Our competitor cut prices.", "example_zh": "我們的競爭對手降價了。", "syllables": ["com", "pe", "ti", "tor"], "stress": 1, "ipa": "kəmˈpɛ.tə.tər", "audio": "audio/marketing-08-w.m4a", "example_audio": "audio/marketing-08-e.m4a"}, {"term": "testimonial", "pos": "n.", "zh": "客戶好評、推薦語", "example_en": "We put testimonials on the website.", "example_zh": "我們把客戶好評放在網站上。", "syllables": ["tes", "ti", "mo", "ni", "al"], "stress": 2, "ipa": "ˌtɛ.stəˈmoʊ.ni.əl", "audio": "audio/marketing-09-w.m4a", "example_audio": "audio/marketing-09-e.m4a"}, {"term": "referral", "pos": "n.", "zh": "轉介、推薦", "example_en": "Most clients come from referrals.", "example_zh": "多數客戶來自轉介。", "syllables": ["re", "fer", "ral"], "stress": 1, "ipa": "rɪˈfɜr.əl", "audio": "audio/marketing-10-w.m4a", "example_audio": "audio/marketing-10-e.m4a"}, {"term": "retail", "pos": "n.", "zh": "零售", "example_en": "The retail price is thirty dollars.", "example_zh": "零售價是三十元。", "syllables": ["re", "tail"], "stress": 0, "ipa": "ˈriˌteɪl", "audio": "audio/marketing-11-w.m4a", "example_audio": "audio/marketing-11-e.m4a"}, {"term": "outlet", "pos": "n.", "zh": "門市、經銷點", "example_en": "They opened a new outlet downtown.", "example_zh": "他們在市中心開了新門市。", "syllables": ["out", "let"], "stress": 0, "ipa": "ˈaʊtˌlɛt", "audio": "audio/marketing-12-w.m4a", "example_audio": "audio/marketing-12-e.m4a"}]}, {"slug": "custom", "name": "自己加的", "words": [{"term": "procurement", "pos": "n.", "zh": "採購（作業）", "example_en": "The procurement process takes two weeks.", "example_zh": "採購流程要兩週。", "syllables": ["pro", "cure", "ment"], "stress": 1, "ipa": "proʊˈkjʊr.mənt", "audio": "audio/custom-01-w.m4a", "example_audio": "audio/custom-01-e.m4a"}, {"term": "tenant", "pos": "n.", "zh": "房客、承租人", "example_en": "The tenant pays rent on the first.", "example_zh": "房客每月一號付租金。", "syllables": ["ten", "ant"], "stress": 0, "ipa": "ˈtɛ.nənt", "audio": "audio/custom-02-w.m4a", "example_audio": "audio/custom-02-e.m4a"}]}]}]</script>
+<script>
+/* 多益單字卡
+ *
+ * 資料由 make_wordbank.py 內嵌（含音節、音標、重音節、發音 data URI）。
+ * 熟練度分三段存在 localStorage：0 不會 / 1 有印象 / 2 熟了。
+ *
+ * 抽卡用「回合制佇列」而不是加權隨機：一輪把所有『不會』與『有印象』的字全排進去，
+ * 『熟了』的只隨機抽兩成複習。純加權隨機在字多的時候會被稀釋——95 個熟字各佔一份權重，
+ * 就算不熟的字權重是六倍，也只有 6% 機率被抽到，等於沒有優先練到不會的。
+ */
+
+(() => {
+  'use strict';
+
+  const BANKS = JSON.parse(document.getElementById('bank-data').textContent);
+  const BANK = BANKS[0];
+  const LEVEL_KEY = 'wordbank:levels';
+  const LEVEL_NAMES = ['不會', '有印象', '熟了'];
+  const REVIEW_RATIO = 0.2;      // 一輪裡「熟了」的字複習兩成
+  const RETRY_GAP = 4;           // 標「不會」的字，本輪隔幾張後再出現一次
+
+  const app = document.getElementById('app');
+
+  /* ---------- 播放（共用同一個 audio 元素，iOS 才不會第一次之後靜音） ---------- */
+
+  let sharedAudio = null;
+  function play(src) {
+    if (!src) return;
+    if (!sharedAudio) {
+      sharedAudio = new Audio();
+      sharedAudio.preload = 'auto';
+    }
+    sharedAudio.pause();
+    sharedAudio.src = src;
+    sharedAudio.currentTime = 0;
+    sharedAudio.play().catch(() => {});
+  }
+
+  /* ---------- 熟練度 ---------- */
+
+  let levels = {};
+  try { levels = JSON.parse(localStorage.getItem(LEVEL_KEY) || '{}'); } catch (e) { levels = {}; }
+
+  const levelOf = (word) => {
+    const value = levels[word.term.toLowerCase()];
+    return typeof value === 'number' ? value : null;
+  };
+
+  function setLevel(word, value) {
+    levels[word.term.toLowerCase()] = value;
+    try { localStorage.setItem(LEVEL_KEY, JSON.stringify(levels)); } catch (e) { /* 忽略 */ }
+  }
+
+  /* ---------- 共用小元件 ---------- */
+
+  const el = (tag, cls, text) => {
+    const node = document.createElement(tag);
+    if (cls) node.className = cls;
+    if (text != null) node.textContent = text;
+    return node;
+  };
+
+  /** 單字本身，原樣不動 */
+  function termView(word) {
+    return el('div', 'term', word.term);
+  }
+
+  /** 音節拆解：con · fi · DEN · tial，重音節上色加粗 */
+  function syllableView(word) {
+    const box = el('div', 'syls');
+    const parts = word.syllables && word.syllables.length ? word.syllables : [word.term];
+    parts.forEach((part, i) => {
+      if (i > 0) box.appendChild(el('span', 'syl-dot', '·'));
+      box.appendChild(el('span', word.stress === i ? 'syl syl--stress' : 'syl', part));
+    });
+    return box;
+  }
+
+  /** 沒給 label 就是 44×44 的方形圖示鈕；給了 label 要用會自動撐寬的樣式，不然文字會爆出框外 */
+  function playButton(src, label) {
+    const btn = el('button', label ? 'btn btn--audio' : 'btn btn--play');
+    btn.type = 'button';
+    btn.appendChild(el('span', 'btn__icon', '▶'));
+    if (label) btn.appendChild(el('span', null, label));
+    btn.addEventListener('click', (event) => { event.stopPropagation(); play(src); });
+    return btn;
+  }
+
+  /* ---------- 主題選擇 ---------- */
+
+  const ALL = { slug: '__all', name: '全部', words: BANK.themes.flatMap((t) => t.words) };
+  const THEMES = [ALL, ...BANK.themes];
+  let theme = ALL;
+  let mode = 'card';
+
+  document.getElementById('bank-meta').append(
+    el('span', 'pill', BANK.title_en || 'TOEIC'),
+    el('span', null, `${BANK.themes.length} 個主題`),
+    el('span', null, `${ALL.words.length} 個單字`),
+  );
+
+  const switcher = el('div', 'switcher');
+  const themeButtons = THEMES.map((item) => {
+    const btn = el('button', 'switcher__btn', item.name);
+    btn.type = 'button';
+    btn.setAttribute('aria-pressed', item === theme ? 'true' : 'false');
+    btn.addEventListener('click', () => {
+      theme = item;
+      themeButtons.forEach((other, i) => other.setAttribute('aria-pressed', THEMES[i] === item ? 'true' : 'false'));
+      resetRound();      // 換主題就重新排一輪，不然會停在別的主題的字上
+      render();
+    });
+    switcher.appendChild(btn);
+    return btn;
+  });
+
+  const modeRow = el('div', 'mode-row');
+  const modeButtons = [['card', '字卡'], ['list', '列表']].map(([key, label]) => {
+    const btn = el('button', 'mode-btn', label);
+    btn.type = 'button';
+    btn.setAttribute('aria-pressed', key === mode ? 'true' : 'false');
+    btn.addEventListener('click', () => {
+      mode = key;
+      modeButtons.forEach((other) => other.setAttribute('aria-pressed', other === btn ? 'true' : 'false'));
+      render();
+    });
+    modeRow.appendChild(btn);
+    return btn;
+  });
+
+  const view = el('div');
+  app.append(switcher, modeRow, view);
+
+  /* ---------- 字卡 ---------- */
+
+  let current = null;
+  let flipped = false;
+  let queue = [];
+  let roundSize = 0;
+
+  function shuffle(list) {
+    const out = list.slice();
+    for (let i = out.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [out[i], out[j]] = [out[j], out[i]];
+    }
+    return out;
+  }
+
+  /** 一輪＝全部不熟的字 + 兩成已熟的字複習。 */
+  function buildQueue(words) {
+    const weak = words.filter((w) => (levelOf(w) ?? 0) === 0);
+    const shaky = words.filter((w) => levelOf(w) === 1);
+    const known = words.filter((w) => levelOf(w) === 2);
+    const review = shuffle(known).slice(0, Math.round(known.length * REVIEW_RATIO));
+    const round = shuffle([...weak, ...shaky, ...review]);
+    return round.length ? round : shuffle(words);
+  }
+
+  function startRound() {
+    queue = buildQueue(theme.words);
+    roundSize = queue.length;
+    current = queue.shift() || null;
+    flipped = false;
+  }
+
+  function resetRound() {
+    queue = [];
+    roundSize = 0;
+    current = null;
+    flipped = false;
+  }
+
+  /** 標「不會」→ 本輪隔幾張後再考一次 */
+  function requeue(word) {
+    queue.splice(Math.min(RETRY_GAP, queue.length), 0, word);
+    roundSize += 1;
+  }
+
+  function advance() {
+    current = queue.shift() || null;
+    flipped = false;
+  }
+
+  function renderCard() {
+    const words = theme.words;
+    view.innerHTML = '';
+    if (!words.length) {
+      view.appendChild(el('p', 'fc__done', '這個主題還沒有單字。'));
+      return;
+    }
+
+    if (!current && queue.length === 0 && roundSize === 0) startRound();
+
+    // 這一輪跑完了
+    if (!current) {
+      const done = el('div', 'fc');
+      const stats = el('div', 'fc__stats');
+      [0, 1, 2].forEach((lv) => {
+        const count = words.filter((w) => levelOf(w) === lv).length;
+        stats.appendChild(el('span', `fc__chip fc__chip--${lv}`, `${LEVEL_NAMES[lv]} ${count}`));
+      });
+      done.appendChild(stats);
+
+      const box = el('div', 'card');
+      const message = el('p', 'fc__done');
+      const weak = words.filter((w) => (levelOf(w) ?? 0) === 0).length;
+      message.textContent = weak
+        ? `這輪練完了，還有 ${weak} 個字標著「不會」。再來一輪？`
+        : '這輪練完了，沒有標著「不會」的字了 👏';
+      box.appendChild(message);
+      done.appendChild(box);
+
+      const again = el('button', 'btn btn--big', '▶ 再來一輪');
+      again.type = 'button';
+      again.addEventListener('click', () => { startRound(); renderCard(); });
+      done.appendChild(again);
+
+      view.appendChild(done);
+      return;
+    }
+
+    const wrap = el('div', 'fc');
+
+    // 熟練度統計 + 本輪進度
+    const stats = el('div', 'fc__stats');
+    [0, 1, 2].forEach((lv) => {
+      const count = words.filter((w) => levelOf(w) === lv).length;
+      stats.appendChild(el('span', `fc__chip fc__chip--${lv}`, `${LEVEL_NAMES[lv]} ${count}`));
+    });
+    stats.appendChild(el('span', 'fc__remain', `本輪 ${roundSize - queue.length} / ${roundSize}`));
+    wrap.appendChild(stats);
+
+    // 卡片：正面只放原本的單字，音節拆解跟音標留到翻面才出現
+    const card = el('div', 'card fc__card');
+    card.appendChild(termView(current));
+    card.appendChild(playButton(current.audio, '聽發音'));
+
+    const back = el('div', 'fc__back');
+    back.hidden = !flipped;
+    back.appendChild(syllableView(current));
+    if (current.ipa) back.appendChild(el('div', 'fc__ipa ipa', `/${current.ipa}/`));
+    const zhRow = el('div');
+    zhRow.appendChild(el('span', 'fc__zh', current.zh));
+    if (current.pos) zhRow.appendChild(el('span', 'fc__pos', current.pos));
+    back.appendChild(zhRow);
+
+    if (current.example_en) {
+      const ex = el('div', 'fc__ex');
+      if (current.example_audio) ex.appendChild(playButton(current.example_audio));
+      const body = el('div');
+      body.appendChild(el('div', 'fc__ex-en', current.example_en));
+      if (current.example_zh) body.appendChild(el('div', 'fc__ex-zh', current.example_zh));
+      ex.appendChild(body);
+      back.appendChild(ex);
+    }
+    card.appendChild(back);
+
+    const tap = el('p', 'fc__tap', flipped ? '選一個熟練度，會自動換下一張' : '點卡片看答案');
+    card.appendChild(tap);
+    card.addEventListener('click', () => { if (!flipped) { flipped = true; renderCard(); } });
+    wrap.appendChild(card);
+
+    // 熟練度按鈕
+    const levelRow = el('div', 'fc__levels');
+    levelRow.hidden = !flipped;
+    [0, 1, 2].forEach((lv) => {
+      const btn = el('button', `lv lv--${lv}`);
+      btn.type = 'button';
+      btn.appendChild(document.createTextNode(LEVEL_NAMES[lv]));
+      btn.appendChild(el('small', null, ['常常出現', '偶爾出現', '很少出現'][lv]));
+      btn.addEventListener('click', () => {
+        setLevel(current, lv);
+        if (lv === 0) requeue(current);
+        advance();
+        renderCard();
+      });
+      levelRow.appendChild(btn);
+    });
+    wrap.appendChild(levelRow);
+
+    view.appendChild(wrap);
+  }
+
+  /* ---------- 列表 ---------- */
+
+  function renderList() {
+    view.innerHTML = '';
+    const list = el('div', 'wb-list');
+
+    theme.words.forEach((word) => {
+      const item = el('div', 'card wb-item');
+      const lv = levelOf(word);
+      item.appendChild(el('div', `lvdot lvdot--${lv === null ? 'none' : lv}`));
+      item.appendChild(playButton(word.audio));
+
+      const body = el('div', 'wb-item__body');
+      body.appendChild(termView(word));
+      const breakdown = el('div', 'wb-item__breakdown');
+      breakdown.appendChild(syllableView(word));
+      if (word.ipa) breakdown.appendChild(el('span', 'ipa', `/${word.ipa}/`));
+      body.appendChild(breakdown);
+
+      const zhRow = el('div', 'wb-item__zh');
+      zhRow.appendChild(document.createTextNode(word.zh));
+      if (word.pos) zhRow.appendChild(el('span', 'wb-item__pos', word.pos));
+      body.appendChild(zhRow);
+
+      if (word.example_en) {
+        const ex = el('div', 'wb-item__ex');
+        if (word.example_audio) ex.appendChild(playButton(word.example_audio));
+        const exBody = el('div');
+        exBody.appendChild(el('div', 'fc__ex-en', word.example_en));
+        if (word.example_zh) exBody.appendChild(el('div', 'fc__ex-zh', word.example_zh));
+        ex.appendChild(exBody);
+        body.appendChild(ex);
+      }
+
+      item.appendChild(body);
+      list.appendChild(item);
+    });
+
+    view.appendChild(list);
+  }
+
+  function render() {
+    if (mode === 'card') renderCard();
+    else renderList();
+  }
+
+  /* ---------- 鍵盤（桌機用） ---------- */
+
+  document.addEventListener('keydown', (event) => {
+    if (mode !== 'card' || !current) return;
+    if (event.code === 'Space') {
+      event.preventDefault();
+      if (!flipped) { flipped = true; renderCard(); }
+      else play(current.audio);
+      return;
+    }
+    if (flipped && ['Digit1', 'Digit2', 'Digit3'].includes(event.code)) {
+      event.preventDefault();
+      const lv = Number(event.code.slice(-1)) - 1;
+      setLevel(current, lv);
+      if (lv === 0) requeue(current);
+      advance();
+      renderCard();
+    }
+  });
+
+  render();
+})();
+
+</script>
+</body>
+</html>

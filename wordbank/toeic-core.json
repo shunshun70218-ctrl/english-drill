@@ -1,0 +1,161 @@
+{
+  "title": "多益核心單字",
+  "title_en": "TOEIC Core Vocabulary",
+  "note": "音標、音節、重音由 tools/english-drill/phonetics.py 從 CMUdict 產生，不要手動填。這裡只要填 term / pos / zh / example_en / example_zh。",
+  "voice": "Samantha",
+  "themes": [
+    {
+      "slug": "office",
+      "name": "辦公室與行政",
+      "words": [
+        { "term": "agenda", "pos": "n.", "zh": "議程", "example_en": "Please review the agenda before the meeting.", "example_zh": "請在會議前看過議程。" },
+        { "term": "attachment", "pos": "n.", "zh": "附件", "example_en": "I forgot to include the attachment.", "example_zh": "我忘了附上附件。" },
+        { "term": "deadline", "pos": "n.", "zh": "截止期限", "example_en": "The deadline has been moved to Friday.", "example_zh": "期限已經改到週五。" },
+        { "term": "memo", "pos": "n.", "zh": "內部通知、備忘錄", "example_en": "A memo was sent to all departments.", "example_zh": "已發通知給所有部門。" },
+        { "term": "confidential", "pos": "adj.", "zh": "機密的", "example_en": "This file is strictly confidential.", "example_zh": "這份檔案是機密的。" },
+        { "term": "forward", "pos": "v.", "zh": "轉寄", "example_en": "Could you forward that email to me?", "example_zh": "可以把那封信轉寄給我嗎？" },
+        { "term": "postpone", "pos": "v.", "zh": "延期", "example_en": "We had to postpone the launch.", "example_zh": "我們只好把發表會延期。" },
+        { "term": "draft", "pos": "n.", "zh": "草稿", "example_en": "Send me a rough draft by noon.", "example_zh": "中午前給我一份草稿。" },
+        { "term": "stationery", "pos": "n.", "zh": "文具", "example_en": "We're running low on stationery.", "example_zh": "我們的文具快用完了。" },
+        { "term": "duplicate", "pos": "n.", "zh": "副本、複本", "example_en": "Keep a duplicate for your records.", "example_zh": "留一份副本存檔。" },
+        { "term": "workload", "pos": "n.", "zh": "工作量", "example_en": "My workload has doubled this month.", "example_zh": "我這個月的工作量翻倍了。" },
+        { "term": "urgent", "pos": "adj.", "zh": "緊急的", "example_en": "This request is urgent.", "example_zh": "這件事很緊急。" }
+      ]
+    },
+    {
+      "slug": "meetings",
+      "name": "會議與簡報",
+      "words": [
+        { "term": "minutes", "pos": "n.", "zh": "會議記錄", "example_en": "Who is taking the minutes today?", "example_zh": "今天誰做會議記錄？" },
+        { "term": "attendee", "pos": "n.", "zh": "與會者", "example_en": "We expect about thirty attendees.", "example_zh": "預計大約三十位與會者。" },
+        { "term": "presentation", "pos": "n.", "zh": "簡報", "example_en": "Her presentation was very clear.", "example_zh": "她的簡報講得很清楚。" },
+        { "term": "handout", "pos": "n.", "zh": "講義、書面資料", "example_en": "Please take a handout from the table.", "example_zh": "請到桌上拿一份講義。" },
+        { "term": "venue", "pos": "n.", "zh": "場地", "example_en": "We need a bigger venue.", "example_zh": "我們需要更大的場地。" },
+        { "term": "summarize", "pos": "v.", "zh": "總結", "example_en": "Could you summarize the main points?", "example_zh": "可以總結一下重點嗎？" },
+        { "term": "clarify", "pos": "v.", "zh": "釐清、說明清楚", "example_en": "Let me clarify what I meant.", "example_zh": "讓我把我的意思講清楚。" },
+        { "term": "reschedule", "pos": "v.", "zh": "改期", "example_en": "Can we reschedule for next week?", "example_zh": "可以改到下週嗎？" },
+        { "term": "consensus", "pos": "n.", "zh": "共識", "example_en": "We reached a consensus quickly.", "example_zh": "我們很快就有共識了。" },
+        { "term": "quarterly", "pos": "adj.", "zh": "每季的", "example_en": "The quarterly report is due tomorrow.", "example_zh": "季報明天到期。" },
+        { "term": "brief", "pos": "v.", "zh": "簡短說明狀況", "example_en": "I'll brief the team this afternoon.", "example_zh": "我下午跟團隊說明狀況。" },
+        { "term": "objective", "pos": "n.", "zh": "目標", "example_en": "Our main objective is cost control.", "example_zh": "我們的主要目標是控制成本。" }
+      ]
+    },
+    {
+      "slug": "hr",
+      "name": "人事與招募",
+      "words": [
+        { "term": "applicant", "pos": "n.", "zh": "應徵者", "example_en": "We received over two hundred applicants.", "example_zh": "我們收到兩百多位應徵者。" },
+        { "term": "resume", "pos": "n.", "zh": "履歷", "example_en": "Attach your resume to the email.", "example_zh": "把履歷附在信裡。" },
+        { "term": "candidate", "pos": "n.", "zh": "人選、候選人", "example_en": "She is the strongest candidate.", "example_zh": "她是最強的人選。" },
+        { "term": "supervisor", "pos": "n.", "zh": "主管", "example_en": "Ask your supervisor to approve it.", "example_zh": "請你主管核准。" },
+        { "term": "promotion", "pos": "n.", "zh": "升遷", "example_en": "He got a promotion last month.", "example_zh": "他上個月升職了。" },
+        { "term": "benefits", "pos": "n.", "zh": "福利", "example_en": "The benefits include health insurance.", "example_zh": "福利包含健康保險。" },
+        { "term": "payroll", "pos": "n.", "zh": "薪資（名冊）", "example_en": "Payroll is processed on the fifth.", "example_zh": "薪資在五號處理。" },
+        { "term": "probation", "pos": "n.", "zh": "試用期", "example_en": "New hires have a three-month probation.", "example_zh": "新進人員有三個月試用期。" },
+        { "term": "recruit", "pos": "v.", "zh": "招募", "example_en": "We plan to recruit five engineers.", "example_zh": "我們打算招五名工程師。" },
+        { "term": "qualification", "pos": "n.", "zh": "資格條件", "example_en": "He meets every qualification.", "example_zh": "他符合所有條件。" },
+        { "term": "resign", "pos": "v.", "zh": "辭職", "example_en": "She resigned without notice.", "example_zh": "她沒預告就辭職了。" },
+        { "term": "overtime", "pos": "n.", "zh": "加班", "example_en": "We're not paid for overtime.", "example_zh": "我們加班沒有加班費。" }
+      ]
+    },
+    {
+      "slug": "finance",
+      "name": "財務與帳務",
+      "words": [
+        { "term": "invoice", "pos": "n.", "zh": "請款單、發票", "example_en": "Please send the invoice by Friday.", "example_zh": "請在週五前寄出請款單。" },
+        { "term": "receipt", "pos": "n.", "zh": "收據", "example_en": "Keep the receipt for reimbursement.", "example_zh": "收據留著報帳用。" },
+        { "term": "expense", "pos": "n.", "zh": "費用、支出", "example_en": "Travel expenses are covered.", "example_zh": "差旅費用公司負擔。" },
+        { "term": "budget", "pos": "n.", "zh": "預算", "example_en": "That's outside our budget.", "example_zh": "那超出我們的預算。" },
+        { "term": "reimbursement", "pos": "n.", "zh": "報帳、核銷", "example_en": "Reimbursement takes about two weeks.", "example_zh": "核銷大約要兩週。" },
+        { "term": "revenue", "pos": "n.", "zh": "營收", "example_en": "Revenue grew by twelve percent.", "example_zh": "營收成長了百分之十二。" },
+        { "term": "deposit", "pos": "n.", "zh": "訂金、押金", "example_en": "A deposit is required in advance.", "example_zh": "需要先付訂金。" },
+        { "term": "refund", "pos": "n.", "zh": "退款", "example_en": "You can request a full refund.", "example_zh": "你可以申請全額退款。" },
+        { "term": "installment", "pos": "n.", "zh": "分期付款", "example_en": "We pay in three installments.", "example_zh": "我們分三期付款。" },
+        { "term": "audit", "pos": "n.", "zh": "稽核", "example_en": "The annual audit starts Monday.", "example_zh": "年度稽核週一開始。" },
+        { "term": "overdue", "pos": "adj.", "zh": "逾期的", "example_en": "Your payment is two weeks overdue.", "example_zh": "你的款項逾期兩週了。" },
+        { "term": "discount", "pos": "n.", "zh": "折扣", "example_en": "They offered a ten percent discount.", "example_zh": "他們給了九折。" }
+      ]
+    },
+    {
+      "slug": "purchasing",
+      "name": "採購與合約",
+      "words": [
+        { "term": "supplier", "pos": "n.", "zh": "供應商", "example_en": "We switched to a cheaper supplier.", "example_zh": "我們換了比較便宜的供應商。" },
+        { "term": "quotation", "pos": "n.", "zh": "報價單", "example_en": "Could you send us a quotation?", "example_zh": "可以給我們一份報價嗎？" },
+        { "term": "negotiate", "pos": "v.", "zh": "談判、議價", "example_en": "We managed to negotiate a better price.", "example_zh": "我們談到了更好的價格。" },
+        { "term": "contract", "pos": "n.", "zh": "合約", "example_en": "The contract expires in June.", "example_zh": "合約六月到期。" },
+        { "term": "renew", "pos": "v.", "zh": "續約、更新", "example_en": "We decided not to renew the contract.", "example_zh": "我們決定不續約。" },
+        { "term": "warranty", "pos": "n.", "zh": "保固", "example_en": "The warranty covers two years.", "example_zh": "保固期兩年。" },
+        { "term": "vendor", "pos": "n.", "zh": "廠商", "example_en": "Three vendors submitted bids.", "example_zh": "三家廠商投標。" },
+        { "term": "specification", "pos": "n.", "zh": "規格", "example_en": "The part must match the specification.", "example_zh": "零件必須符合規格。" },
+        { "term": "approve", "pos": "v.", "zh": "核准", "example_en": "The manager has to approve the order.", "example_zh": "訂單要經理核准。" },
+        { "term": "bid", "pos": "n.", "zh": "投標、報價", "example_en": "Their bid was the lowest.", "example_zh": "他們的報價最低。" },
+        { "term": "clause", "pos": "n.", "zh": "條款", "example_en": "Read the cancellation clause carefully.", "example_zh": "仔細看取消條款。" },
+        { "term": "compliance", "pos": "n.", "zh": "合規、遵守規定", "example_en": "Compliance is checked every quarter.", "example_zh": "合規每季查核一次。" }
+      ]
+    },
+    {
+      "slug": "logistics",
+      "name": "物流與庫存",
+      "words": [
+        { "term": "inventory", "pos": "n.", "zh": "庫存", "example_en": "We take inventory every month.", "example_zh": "我們每個月盤點庫存。" },
+        { "term": "warehouse", "pos": "n.", "zh": "倉庫", "example_en": "The goods are still in the warehouse.", "example_zh": "貨還在倉庫裡。" },
+        { "term": "shipment", "pos": "n.", "zh": "出貨、一批貨", "example_en": "The shipment arrives on Thursday.", "example_zh": "貨週四到。" },
+        { "term": "freight", "pos": "n.", "zh": "貨運、運費", "example_en": "Freight costs went up again.", "example_zh": "運費又漲了。" },
+        { "term": "defective", "pos": "adj.", "zh": "有瑕疵的", "example_en": "Two units were defective.", "example_zh": "有兩台是瑕疵品。" },
+        { "term": "packaging", "pos": "n.", "zh": "包裝", "example_en": "The packaging was damaged.", "example_zh": "包裝破損了。" },
+        { "term": "restock", "pos": "v.", "zh": "補貨", "example_en": "We restock every Monday.", "example_zh": "我們每週一補貨。" },
+        { "term": "courier", "pos": "n.", "zh": "快遞", "example_en": "Send it by courier, please.", "example_zh": "麻煩用快遞寄。" },
+        { "term": "customs", "pos": "n.", "zh": "海關", "example_en": "The package is held at customs.", "example_zh": "包裹卡在海關。" },
+        { "term": "delay", "pos": "n.", "zh": "延誤", "example_en": "There's a two-day delay.", "example_zh": "有兩天的延誤。" },
+        { "term": "distributor", "pos": "n.", "zh": "經銷商", "example_en": "They are our distributor in Japan.", "example_zh": "他們是我們在日本的經銷商。" },
+        { "term": "logistics", "pos": "n.", "zh": "物流", "example_en": "Logistics is handled by a third party.", "example_zh": "物流交給第三方處理。" }
+      ]
+    },
+    {
+      "slug": "travel",
+      "name": "差旅與交通",
+      "words": [
+        { "term": "itinerary", "pos": "n.", "zh": "行程表", "example_en": "I'll email you the itinerary.", "example_zh": "我把行程表寄給你。" },
+        { "term": "reservation", "pos": "n.", "zh": "訂位、預約", "example_en": "I have a reservation under Ho.", "example_zh": "我有訂位，姓 Ho。" },
+        { "term": "layover", "pos": "n.", "zh": "轉機停留", "example_en": "We have a four-hour layover.", "example_zh": "我們要轉機停留四小時。" },
+        { "term": "accommodation", "pos": "n.", "zh": "住宿", "example_en": "Accommodation is arranged by the company.", "example_zh": "住宿由公司安排。" },
+        { "term": "shuttle", "pos": "n.", "zh": "接駁車", "example_en": "The hotel shuttle runs every hour.", "example_zh": "飯店接駁車每小時一班。" },
+        { "term": "departure", "pos": "n.", "zh": "出發、離站", "example_en": "Check the departure board.", "example_zh": "看一下出發看板。" },
+        { "term": "confirmation", "pos": "n.", "zh": "確認（信）", "example_en": "Show them your confirmation email.", "example_zh": "把確認信給他們看。" },
+        { "term": "baggage", "pos": "n.", "zh": "行李", "example_en": "Baggage claim is downstairs.", "example_zh": "行李提領在樓下。" },
+        { "term": "boarding", "pos": "n.", "zh": "登機", "example_en": "Boarding begins in ten minutes.", "example_zh": "十分鐘後開始登機。" },
+        { "term": "rental", "pos": "n.", "zh": "租賃、租車", "example_en": "I booked a car rental online.", "example_zh": "我在網路上訂了租車。" },
+        { "term": "delegate", "pos": "n.", "zh": "代表", "example_en": "Ten delegates attended the conference.", "example_zh": "十位代表出席了會議。" },
+        { "term": "allowance", "pos": "n.", "zh": "津貼", "example_en": "The daily allowance is fifty dollars.", "example_zh": "每日津貼是五十元。" }
+      ]
+    },
+    {
+      "slug": "marketing",
+      "name": "行銷與客戶",
+      "words": [
+        { "term": "campaign", "pos": "n.", "zh": "行銷活動", "example_en": "The campaign starts next month.", "example_zh": "行銷活動下個月開跑。" },
+        { "term": "brochure", "pos": "n.", "zh": "宣傳手冊", "example_en": "Take a brochure on your way out.", "example_zh": "出去時拿一份手冊。" },
+        { "term": "survey", "pos": "n.", "zh": "問卷調查", "example_en": "We sent a survey to all customers.", "example_zh": "我們發問卷給所有客戶。" },
+        { "term": "feedback", "pos": "n.", "zh": "意見回饋", "example_en": "The feedback has been positive.", "example_zh": "回饋一直都很正面。" },
+        { "term": "complaint", "pos": "n.", "zh": "客訴、抱怨", "example_en": "We received a complaint about delivery.", "example_zh": "我們收到一件關於配送的客訴。" },
+        { "term": "subscription", "pos": "n.", "zh": "訂閱", "example_en": "Your subscription expires today.", "example_zh": "你的訂閱今天到期。" },
+        { "term": "launch", "pos": "v.", "zh": "推出（產品）", "example_en": "We launch the new model in May.", "example_zh": "我們五月推出新機型。" },
+        { "term": "competitor", "pos": "n.", "zh": "競爭對手", "example_en": "Our competitor cut prices.", "example_zh": "我們的競爭對手降價了。" },
+        { "term": "testimonial", "pos": "n.", "zh": "客戶好評、推薦語", "example_en": "We put testimonials on the website.", "example_zh": "我們把客戶好評放在網站上。" },
+        { "term": "referral", "pos": "n.", "zh": "轉介、推薦", "example_en": "Most clients come from referrals.", "example_zh": "多數客戶來自轉介。" },
+        { "term": "retail", "pos": "n.", "zh": "零售", "example_en": "The retail price is thirty dollars.", "example_zh": "零售價是三十元。" },
+        { "term": "outlet", "pos": "n.", "zh": "門市、經銷點", "example_en": "They opened a new outlet downtown.", "example_zh": "他們在市中心開了新門市。" }
+      ]
+    },
+    {
+      "slug": "custom",
+      "name": "自己加的",
+      "note": "從 LINE 用「加單字 xxx」丟進來、再同步過來的字。",
+      "words": [
+        { "term": "procurement", "pos": "n.", "zh": "採購（作業）", "example_en": "The procurement process takes two weeks.", "example_zh": "採購流程要兩週。" },
+        { "term": "tenant", "pos": "n.", "zh": "房客、承租人", "example_en": "The tenant pays rent on the first.", "example_zh": "房客每月一號付租金。" }
+      ]
+    }
+  ]
+}

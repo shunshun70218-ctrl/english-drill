@@ -1,0 +1,61 @@
+{
+  "slug": "restaurant",
+  "title": "餐廳點餐與結帳",
+  "title_en": "At a Restaurant",
+  "level": "A2–B1",
+  "date": "2026-08-16",
+  "scene": "兩個人走進一間餐廳，沒訂位。要入座、看菜單、問服務生推薦什麼、點主餐跟配菜、最後結帳刷卡。",
+  "roles": {
+    "A": { "name": "Server", "zh": "服務生", "voice": "Samantha", "rate": 155 },
+    "B": { "name": "You", "zh": "顧客（你）", "voice": "Daniel", "rate": 155 }
+  },
+  "lines": [
+    { "role": "A", "en": "Hi there. Table for two?", "zh": "嗨，兩位嗎？" },
+    { "role": "B", "en": "Yes, please. Do we need a reservation?", "zh": "是的。需要訂位嗎？" },
+    { "role": "A", "en": "Not tonight. Right this way.", "zh": "今晚不用。這邊請。" },
+    { "role": "A", "en": "Here are your menus. Anything to drink?", "zh": "這是菜單。要喝點什麼嗎？" },
+    { "role": "B", "en": "Just water for now, thanks.", "zh": "先給水就好，謝謝。" },
+    { "role": "A", "en": "Are you ready to order?", "zh": "可以點餐了嗎？" },
+    { "role": "B", "en": "What would you recommend?", "zh": "你推薦什麼？" },
+    { "role": "A", "en": "The grilled salmon is very popular.", "zh": "烤鮭魚很受歡迎。" },
+    { "role": "B", "en": "I'll have that, please.", "zh": "那我要那個。" },
+    { "role": "A", "en": "Any sides with that?", "zh": "要配什麼嗎？" },
+    { "role": "B", "en": "A side salad, please. No onions.", "zh": "一份沙拉，不要洋蔥。" },
+    { "role": "A", "en": "Of course. Anything else?", "zh": "沒問題。還需要別的嗎？" },
+    { "role": "B", "en": "That's all for now, thanks.", "zh": "先這樣就好，謝謝。" },
+    { "role": "B", "en": "Excuse me, could we get the check?", "zh": "不好意思，可以買單嗎？" },
+    { "role": "A", "en": "Sure. All together or separate?", "zh": "好的。一起付還是分開付？" },
+    { "role": "B", "en": "All together. Can I pay by card?", "zh": "一起付。可以刷卡嗎？" },
+    { "role": "A", "en": "Absolutely. I'll be right back.", "zh": "當然可以，我馬上回來。" },
+    { "role": "B", "en": "Thank you.", "zh": "謝謝。" }
+  ],
+  "vocab": [
+    { "term": "table for two", "pos": "phr.", "zh": "兩個人的位子",
+      "example_en": "Table for two, please.", "example_zh": "兩位，謝謝。" },
+    { "term": "recommend", "pos": "v.", "zh": "推薦",
+      "example_en": "What do you recommend?", "example_zh": "你推薦什麼？" },
+    { "term": "popular", "pos": "adj.", "zh": "受歡迎的",
+      "example_en": "That dish is very popular.", "example_zh": "那道菜很受歡迎。" },
+    { "term": "side", "pos": "n.", "zh": "配菜",
+      "example_en": "Which side would you like?", "example_zh": "您要哪一種配菜？" },
+    { "term": "check", "pos": "n.", "zh": "帳單（美式）",
+      "example_en": "Could we get the check, please?", "example_zh": "可以買單嗎？" },
+    { "term": "separate", "pos": "adj.", "zh": "分開的（分開結帳）",
+      "example_en": "We'd like separate checks.", "example_zh": "我們要分開結帳。" },
+    { "term": "all together", "pos": "phr.", "zh": "一起（結帳）",
+      "example_en": "All together, please.", "example_zh": "一起結，謝謝。" },
+    { "term": "pay by card", "pos": "phr.", "zh": "刷卡",
+      "example_en": "Can I pay by card?", "example_zh": "可以刷卡嗎？" },
+    { "term": "grilled", "pos": "adj.", "zh": "燒烤的",
+      "example_en": "I'll have the grilled chicken.", "example_zh": "我要烤雞。" },
+    { "term": "for now", "pos": "phr.", "zh": "目前先這樣",
+      "example_en": "That's all for now.", "example_zh": "先這樣就好。" }
+  ],
+  "tips": [
+    "美式餐廳帳單講 check，英式講 bill。receipt 是「收據」，結帳時說 receipt 會被誤會成你要發票。",
+    "服務生一定會問 All together or separate?（一起付還是分開），這是固定問法，要能秒答。",
+    "點餐用 I'll have… 最自然，比 I want 禮貌、又比 Could I have 簡潔。母語人士十次有八次講這句。",
+    "for now 是「目前先這樣」，暗示等一下可能還會加點。只說 That's all 語氣比較像「講完了別來煩我」。",
+    "不要什麼配料直接說 No onions. 就好，不用講成 I don't want onions —— 短句在餐廳更自然。"
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "slug": "hotel-check-in",
+  "title": "飯店入住",
+  "title_en": "Checking In at a Hotel",
+  "level": "A2–B1",
+  "date": "2026-08-16",
+  "scene": "你晚上抵達飯店櫃檯辦入住。要報訂房、給證件、問清楚早餐時間地點、Wi-Fi、退房時間，還有行李能不能寄放。",
+  "roles": {
+    "A": { "name": "Front Desk", "zh": "櫃檯人員", "voice": "Samantha", "rate": 155 },
+    "B": { "name": "You", "zh": "旅客（你）", "voice": "Daniel", "rate": 155 }
+  },
+  "lines": [
+    { "role": "A", "en": "Good evening. Are you checking in?", "zh": "晚安，請問是要辦入住嗎？" },
+    { "role": "B", "en": "Yes, I have a reservation under Ho.", "zh": "是的，我有訂房，姓 Ho。" },
+    { "role": "A", "en": "Let me find it. Two nights, one queen bed?", "zh": "我找一下。兩晚，一張大床？" },
+    { "role": "B", "en": "That's right.", "zh": "沒錯。" },
+    { "role": "A", "en": "May I see your passport and a credit card?", "zh": "可以給我護照跟一張信用卡嗎？" },
+    { "role": "B", "en": "Sure, here you go.", "zh": "好的，給你。" },
+    { "role": "A", "en": "Thank you. Breakfast is included, seven to ten.", "zh": "謝謝。含早餐，七點到十點。" },
+    { "role": "B", "en": "Great. Where is it served?", "zh": "太好了。在哪裡用餐？" },
+    { "role": "A", "en": "On the second floor, next to the lobby.", "zh": "二樓，就在大廳旁邊。" },
+    { "role": "B", "en": "Is there Wi-Fi in the room?", "zh": "房間裡有 Wi-Fi 嗎？" },
+    { "role": "A", "en": "Yes, the password is on your key card.", "zh": "有，密碼印在房卡上。" },
+    { "role": "B", "en": "What time is checkout?", "zh": "退房是幾點？" },
+    { "role": "A", "en": "Eleven, but we can hold your bags after that.", "zh": "十一點，不過之後可以幫您寄放行李。" },
+    { "role": "B", "en": "That's helpful, thanks.", "zh": "那太好了，謝謝。" },
+    { "role": "A", "en": "You're in room 512. The elevator is on your left.", "zh": "您的房間是 512。電梯在您左手邊。" },
+    { "role": "B", "en": "Got it. Thank you.", "zh": "了解，謝謝。" }
+  ],
+  "vocab": [
+    { "term": "reservation", "pos": "n.", "zh": "訂房、訂位",
+      "example_en": "I have a reservation under Chen.", "example_zh": "我有訂房，姓陳。" },
+    { "term": "included", "pos": "adj.", "zh": "有包含在內的",
+      "example_en": "Is breakfast included?", "example_zh": "有含早餐嗎？" },
+    { "term": "lobby", "pos": "n.", "zh": "大廳",
+      "example_en": "I'll wait for you in the lobby.", "example_zh": "我在大廳等你。" },
+    { "term": "key card", "pos": "n.", "zh": "房卡",
+      "example_en": "My key card doesn't work.", "example_zh": "我的房卡刷不開。" },
+    { "term": "checkout", "pos": "n.", "zh": "退房（時間）",
+      "example_en": "Checkout is at eleven.", "example_zh": "退房時間是十一點。" },
+    { "term": "elevator", "pos": "n.", "zh": "電梯",
+      "example_en": "The elevator is around the corner.", "example_zh": "電梯在轉角。" },
+    { "term": "floor", "pos": "n.", "zh": "樓層",
+      "example_en": "The gym is on the third floor.", "example_zh": "健身房在三樓。" },
+    { "term": "hold", "pos": "v.", "zh": "暫時保管、寄放",
+      "example_en": "Could you hold my bags until five?", "example_zh": "可以幫我寄放行李到五點嗎？" },
+    { "term": "extra bed", "pos": "n.", "zh": "加床",
+      "example_en": "Can we get an extra bed?", "example_zh": "可以加一張床嗎？" },
+    { "term": "late checkout", "pos": "n.", "zh": "延遲退房",
+      "example_en": "Is late checkout possible?", "example_zh": "可以延遲退房嗎？" }
+  ],
+  "tips": [
+    "「我有訂房」講 I have a reservation under 加姓，不要說 I booked a room —— 那聽起來像在描述你以前做過的動作。",
+    "房號 512 唸「five twelve」，不是一個一個唸「five one two」。三位數房號都這樣唸。",
+    "寄放行李用 hold my bags 或 keep my luggage，不要用 save —— save 是「省下、拯救」。",
+    "checkout 連在一起是名詞（退房時間），check out 分開是動詞（辦退房）。問時間用名詞那個。",
+    "Wi-Fi 唸 /ˈwaɪ faɪ/，兩個音節都是長音，不要唸成「歪非」。"
+  ]
+}

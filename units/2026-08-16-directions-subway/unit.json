@@ -1,0 +1,59 @@
+{
+  "slug": "directions-subway",
+  "title": "問路與搭地鐵",
+  "title_en": "Asking for Directions",
+  "level": "A2–B1",
+  "date": "2026-08-16",
+  "scene": "你在陌生城市要去中央車站，攔住一個路人問路。要問怎麼搭、在哪搭、要不要轉車、票多少錢、車程多久、從哪個出口出來。",
+  "roles": {
+    "A": { "name": "Local", "zh": "路人", "voice": "Samantha", "rate": 155 },
+    "B": { "name": "You", "zh": "你", "voice": "Daniel", "rate": 155 }
+  },
+  "lines": [
+    { "role": "B", "en": "Excuse me, how do I get to Central Station?", "zh": "不好意思，請問中央車站怎麼去？" },
+    { "role": "A", "en": "You can take the blue line. It's three stops.", "zh": "你可以搭藍線，三站就到。" },
+    { "role": "B", "en": "Where do I catch it?", "zh": "在哪裡搭？" },
+    { "role": "A", "en": "Go down these stairs and follow the signs.", "zh": "從這個樓梯下去，照指標走。" },
+    { "role": "B", "en": "Do I need to transfer?", "zh": "需要轉車嗎？" },
+    { "role": "A", "en": "No, it's a direct ride.", "zh": "不用，直達。" },
+    { "role": "B", "en": "How much is a single ticket?", "zh": "單程票多少錢？" },
+    { "role": "A", "en": "Two fifty. You can buy it at the machine.", "zh": "兩塊五。可以在機器買。" },
+    { "role": "B", "en": "Does the machine take cash?", "zh": "機器收現金嗎？" },
+    { "role": "A", "en": "It does, but it doesn't give change.", "zh": "收，但是不找零。" },
+    { "role": "B", "en": "Good to know. How long does it take?", "zh": "知道了。大概要多久？" },
+    { "role": "A", "en": "About fifteen minutes.", "zh": "大約十五分鐘。" },
+    { "role": "B", "en": "And which exit should I use?", "zh": "那我要走哪個出口？" },
+    { "role": "A", "en": "Exit B. It comes out right at the square.", "zh": "B 出口，出來就是廣場。" },
+    { "role": "B", "en": "That's really helpful. Thank you.", "zh": "真的幫大忙了，謝謝。" },
+    { "role": "A", "en": "No problem. Have a good one.", "zh": "不客氣，祝你順利。" }
+  ],
+  "vocab": [
+    { "term": "excuse me", "pos": "phr.", "zh": "不好意思（叫住人）",
+      "example_en": "Excuse me, is this seat taken?", "example_zh": "不好意思，這位子有人嗎？" },
+    { "term": "get to", "pos": "phr.", "zh": "到達（某地）",
+      "example_en": "How do I get to the airport?", "example_zh": "機場怎麼去？" },
+    { "term": "stop", "pos": "n.", "zh": "（車）站",
+      "example_en": "It's only two stops from here.", "example_zh": "從這裡只有兩站。" },
+    { "term": "transfer", "pos": "v.", "zh": "轉車",
+      "example_en": "You have to transfer at the next station.", "example_zh": "你要在下一站轉車。" },
+    { "term": "direct", "pos": "adj.", "zh": "直達的",
+      "example_en": "Is there a direct train?", "example_zh": "有直達的車嗎？" },
+    { "term": "single ticket", "pos": "n.", "zh": "單程票",
+      "example_en": "Two single tickets, please.", "example_zh": "兩張單程票，謝謝。" },
+    { "term": "change", "pos": "n.", "zh": "找零、零錢",
+      "example_en": "The machine doesn't give change.", "example_zh": "機器不找零。" },
+    { "term": "exit", "pos": "n.", "zh": "出口",
+      "example_en": "Take Exit B and turn right.", "example_zh": "走 B 出口然後右轉。" },
+    { "term": "sign", "pos": "n.", "zh": "指標、標示",
+      "example_en": "Just follow the signs.", "example_zh": "照著指標走就好。" },
+    { "term": "square", "pos": "n.", "zh": "廣場",
+      "example_en": "We'll meet at the square.", "example_zh": "我們在廣場碰面。" }
+  ],
+  "tips": [
+    "問路一定要用 Excuse me 開頭。直接問 How do I get to… 會顯得很沒禮貌，這在國外比想像中嚴重。",
+    "「三站」用 stop 不是 station —— station 指的是車站那棟建築，stop 才是計算站數的單位。",
+    "change 在這裡是「找零」不是「改變」。這是台灣人最常誤會的一字多義，聽到 no change 是說不找零。",
+    "Two fifty 就是 $2.50，母語人士不會唸 two point five dollars。價格幾乎都用這種「整數＋分」的唸法。",
+    "Have a good one. 是很口語的道別，等於 Have a nice day。聽到不用想太多，回 You too. 就好。"
+  ]
+}

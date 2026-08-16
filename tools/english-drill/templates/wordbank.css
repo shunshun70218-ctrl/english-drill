@@ -1,0 +1,216 @@
+/* 單字卡專用樣式，疊在 player.css 之上。
+ * 熟練度沿用同一套語意色：不會=赭黃（要練的東西都是赭黃）、有印象=中性、熟了=青。
+ */
+
+/* 帶文字的播放鈕：會自動撐寬，不像 .btn--play 是固定 44×44 的方形圖示鈕 */
+.btn--audio {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  height: 44px;
+  border-radius: 999px;
+  font-size: 15px;
+  font-weight: 600;
+}
+.btn--audio .btn__icon { font-size: 12px; line-height: 1; }
+.btn--audio:hover { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+
+.btn--play .btn__icon { line-height: 1; }
+
+.mode-row { display: flex; gap: 6px; margin-bottom: 16px; }
+
+.mode-btn {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 14px;
+  padding: 10px;
+  border-radius: 9px;
+  cursor: pointer;
+  min-height: 44px;
+}
+.mode-btn[aria-pressed="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+  font-weight: 600;
+}
+
+/* ---------- 音節顯示 ---------- */
+
+/* 單字本身：原樣呈現，不切開 */
+.term {
+  font-family: var(--serif);
+  line-height: 1.2;
+  text-wrap: balance;
+}
+
+.syls {
+  font-family: var(--serif);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 2px;
+  line-height: 1.25;
+}
+.syl { }
+
+/* 重音節只用顏色標，不改大小寫、不加粗——字體一致，讀起來才不會跳。
+ * 重音位置在音標裡也有 ˈ 記號，這裡是輔助不是唯一來源。 */
+.syl--stress { color: var(--voice-a); }
+.syl-dot {
+  color: var(--ink-faint);
+  font-size: .62em;
+  padding: 0 .18em;
+  transform: translateY(-.12em);
+}
+
+.ipa {
+  font-family: var(--serif);
+  color: var(--ink-soft);
+  font-variant-numeric: normal;
+}
+
+/* ---------- 字卡 ---------- */
+
+.fc { display: flex; flex-direction: column; gap: 14px; }
+
+.fc__stats {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 12px;
+  color: var(--ink-faint);
+  font-variant-numeric: tabular-nums;
+}
+.fc__chip {
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-weight: 600;
+}
+.fc__chip--0 { background: var(--you-soft); color: var(--voice-b); }
+.fc__chip--1 { background: var(--surface-2); color: var(--ink-soft); }
+.fc__chip--2 { background: var(--accent-soft); color: var(--accent); }
+.fc__remain { margin-left: auto; }
+
+.fc__card {
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  text-align: center;
+  cursor: pointer;
+  padding: 26px 20px;
+}
+.fc__card .term { font-size: 34px; font-weight: 600; }
+.fc__card .syls { font-size: 21px; color: var(--ink-soft); }
+
+.fc__tap { font-size: 13px; color: var(--ink-faint); margin: 0; }
+
+.fc__back {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+.fc__back[hidden] { display: none; }
+
+.fc__ipa { font-size: 18px; }
+.fc__pos { font-size: 13px; color: var(--ink-faint); font-style: italic; margin-left: 8px; }
+.fc__zh { font-size: 20px; font-weight: 600; }
+
+.fc__ex {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  text-align: left;
+  background: var(--surface-2);
+  border-radius: 10px;
+  padding: 11px 13px;
+  width: 100%;
+}
+.fc__ex-en { font-family: var(--serif); font-size: 16px; }
+.fc__ex-zh { font-size: 13px; color: var(--ink-soft); margin-top: 2px; }
+
+.fc__levels { display: flex; gap: 8px; }
+.fc__levels[hidden] { display: none; }
+
+.lv {
+  flex: 1;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 14px 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  min-height: 52px;
+}
+.lv small {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--ink-faint);
+  margin-top: 2px;
+}
+.lv--0:hover { border-color: var(--voice-b); color: var(--voice-b); }
+.lv--2:hover { border-color: var(--accent); color: var(--accent); }
+
+.fc__done {
+  text-align: center;
+  color: var(--ink-soft);
+  padding: 40px 0;
+}
+
+/* ---------- 列表 ---------- */
+
+.wb-list { display: grid; gap: 10px; }
+
+.wb-item { display: flex; gap: 12px; align-items: flex-start; }
+.wb-item__body { flex: 1; min-width: 0; }
+.wb-item .term { font-size: 20px; font-weight: 600; }
+.wb-item .syls { justify-content: flex-start; font-size: 15px; }
+
+.wb-item__breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 12px;
+  margin-top: 3px;
+  font-size: 14px;
+  color: var(--ink-soft);
+}
+
+.wb-item__zh { font-size: 15px; margin-top: 6px; }
+.wb-item__pos { font-size: 12px; color: var(--ink-faint); font-style: italic; margin-left: 6px; }
+.wb-item__ex {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--line);
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.lvdot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+  margin-top: 8px;
+}
+.lvdot--0 { background: var(--voice-b); }
+.lvdot--1 { background: var(--ink-faint); }
+.lvdot--2 { background: var(--accent); }
+.lvdot--none { background: var(--line); }
