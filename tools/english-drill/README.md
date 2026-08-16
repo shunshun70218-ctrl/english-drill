@@ -89,6 +89,24 @@ units/<日期>-<slug>/
 `tts.py` 裡的 `_openai()` 是留好的空位。填完那個函式、把 `BACKEND` 改成 `"openai"`，
 其他程式跟所有 `unit.json` 都不用動。API key 已經在 `~/.openai.env`。
 
+## 兩個單字庫
+
+| 檔案 | 內容 | 怎麼來的 |
+|---|---|---|
+| `wordbank/toeic-core.json` | 9 主題 98 字，**含例句發音** | 手寫，可以自由編輯 |
+| `wordbank/toeic-2000.json` | 20 組 2000 字，由簡單到困難 | `build_toeic2000.py` 自動產生，**不要手改** |
+
+```bash
+python3 tools/english-drill/build_toeic2000.py     # 重建 2000 字（不需網路、不呼叫任何 API）
+```
+
+2000 字那份的每個欄位都有可查證的來源——單字表來自 TOEIC Service List 與 NGSL，
+難度排序來自 33 萬字詞頻表，中譯來自 ECDICT 辭典，例句來自 Tatoeba 對照語料。
+細節與授權見 [`data/SOURCES.md`](data/SOURCES.md)。
+
+⚠️ 2000 字那份**只產單字發音、不產例句發音**（`example_audio: false`）。
+全開的話音檔會從 2000 個變成 4000 個、體積多四倍，Google Drive 同步會很痛苦。
+
 ## 多益單字庫
 
 ```bash

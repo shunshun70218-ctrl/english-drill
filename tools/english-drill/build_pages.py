@@ -54,35 +54,42 @@ def copy_units() -> list[dict]:
 
 
 def build_wordbank() -> int:
-    """單字卡：音檔獨立成檔，不做 base64。"""
+    """單字卡：音檔獨立成檔，不做 base64。多個字庫會併成一頁，靠切換器選。"""
     out_dir = DOCS / "wordbank"
     audio_out = out_dir / "audio"
     audio_out.mkdir(parents=True, exist_ok=True)
 
-    bank_path = sorted(BANK_DIR.glob("*.json"))[0]
-    bank = json.loads(bank_path.read_text(encoding="utf-8"))
-    bank["_path"] = bank_path
-    total, _missing = enrich_words(bank)
+    payload, total = [], 0
 
-    audio_src = OUT_DIR / "wordbank-audio" / bank_path.stem
-    manifest = build_audio(bank, audio_src, with_examples=True, force=False)
+    # 小的字庫排前面（核心 98 字先出現，2000 字在後）
+    for bank_path in sorted(BANK_DIR.glob("*.json"), key=lambda p: p.stat().st_size):
+        bank = json.loads(bank_path.read_text(encoding="utf-8"))
+        bank["_path"] = bank_path
+        count, _missing = enrich_words(bank)
+        total += count
 
-    # attach_audio 會塞 data URI，這裡改成相對路徑並把檔案複製過去
-    for theme in bank["themes"]:
-        for word in theme["words"]:
-            key = word.pop("audio_key")
-            for suffix, field in (("w", "audio"), ("e", "example_audio")):
-                entry = manifest.get(f"{key}-{suffix}")
-                if not entry:
-                    continue
-                shutil.copyfile(audio_src / entry["file"], audio_out / entry["file"])
-                word[field] = f"audio/{entry['file']}"
+        # 2000 字的字庫關掉例句音檔——不然檔案數與體積都會多四倍
+        with_examples = bank.get("example_audio", True)
+        audio_src = OUT_DIR / "wordbank-audio" / bank_path.stem
+        manifest = build_audio(bank, audio_src, with_examples=with_examples, force=False)
 
-    payload = [{
-        "title": bank["title"],
-        "title_en": bank.get("title_en", ""),
-        "themes": [{"slug": t["slug"], "name": t["name"], "words": t["words"]} for t in bank["themes"]],
-    }]
+        prefix = bank_path.stem          # 不同字庫的音檔放在各自的子資料夾，避免撞名
+        (audio_out / prefix).mkdir(parents=True, exist_ok=True)
+        for theme in bank["themes"]:
+            for word in theme["words"]:
+                key = word.pop("audio_key")
+                for suffix, field in (("w", "audio"), ("e", "example_audio")):
+                    entry = manifest.get(f"{key}-{suffix}")
+                    if not entry:
+                        continue
+                    shutil.copyfile(audio_src / entry["file"], audio_out / prefix / entry["file"])
+                    word[field] = f"audio/{prefix}/{entry['file']}"
+
+        payload.append({
+            "title": bank["title"],
+            "title_en": bank.get("title_en", ""),
+            "themes": [{"slug": t["slug"], "name": t["name"], "words": t["words"]} for t in bank["themes"]],
+        })
 
     # 給 n8n 每日推播用的扁平清單。音檔長度要帶著——LINE 的語音訊息
     # 一定要給 duration（毫秒），沒有的話訊息會被 LINE 退回。

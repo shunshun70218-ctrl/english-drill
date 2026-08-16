@@ -12,8 +12,9 @@
   'use strict';
 
   const BANKS = JSON.parse(document.getElementById('bank-data').textContent);
-  const BANK = BANKS[0];
+  let BANK = BANKS[0];
   const LEVEL_KEY = 'wordbank:levels';
+  const BANK_KEY = 'wordbank:bank';
   const LEVEL_NAMES = ['不會', '有印象', '熟了'];
   const REVIEW_RATIO = 0.2;      // 一輪裡「熟了」的字複習兩成
   const RETRY_GAP = 4;           // 標「不會」的字，本輪隔幾張後再出現一次
@@ -87,31 +88,60 @@
 
   /* ---------- 主題選擇 ---------- */
 
-  const ALL = { slug: '__all', name: '全部', words: BANK.themes.flatMap((t) => t.words) };
-  const THEMES = [ALL, ...BANK.themes];
-  let theme = ALL;
+  let THEMES = [];
+  let theme = null;
   let mode = 'card';
 
-  document.getElementById('bank-meta').append(
-    el('span', 'pill', BANK.title_en || 'TOEIC'),
-    el('span', null, `${BANK.themes.length} 個主題`),
-    el('span', null, `${ALL.words.length} 個單字`),
-  );
-
+  const meta = document.getElementById('bank-meta');
+  const bankRow = el('div', 'mode-row');
   const switcher = el('div', 'switcher');
-  const themeButtons = THEMES.map((item) => {
-    const btn = el('button', 'switcher__btn', item.name);
+
+  // 字庫切換（只有一個字庫就不顯示）
+  const bankButtons = BANKS.map((item) => {
+    const btn = el('button', 'mode-btn', item.title);
     btn.type = 'button';
-    btn.setAttribute('aria-pressed', item === theme ? 'true' : 'false');
-    btn.addEventListener('click', () => {
-      theme = item;
-      themeButtons.forEach((other, i) => other.setAttribute('aria-pressed', THEMES[i] === item ? 'true' : 'false'));
-      resetRound();      // 換主題就重新排一輪，不然會停在別的主題的字上
-      render();
-    });
-    switcher.appendChild(btn);
+    btn.addEventListener('click', () => selectBank(item));
+    bankRow.appendChild(btn);
     return btn;
   });
+  bankRow.hidden = BANKS.length < 2;
+
+  function buildThemes() {
+    const all = { slug: '__all', name: '全部', words: BANK.themes.flatMap((t) => t.words) };
+    THEMES = [all, ...BANK.themes];
+    theme = all;
+
+    meta.innerHTML = '';
+    meta.append(
+      el('span', 'pill', BANK.title_en || 'TOEIC'),
+      el('span', null, `${BANK.themes.length} 組`),
+      el('span', null, `${all.words.length} 個單字`),
+    );
+
+    switcher.innerHTML = '';
+    THEMES.forEach((item) => {
+      const btn = el('button', 'switcher__btn', item.name);
+      btn.type = 'button';
+      btn.setAttribute('aria-pressed', item === theme ? 'true' : 'false');
+      btn.addEventListener('click', () => {
+        theme = item;
+        Array.from(switcher.children).forEach((other, i) =>
+          other.setAttribute('aria-pressed', THEMES[i] === item ? 'true' : 'false'));
+        resetRound();    // 換組就重新排一輪，不然會停在別組的字上
+        render();
+      });
+      switcher.appendChild(btn);
+    });
+  }
+
+  function selectBank(item) {
+    BANK = item;
+    bankButtons.forEach((btn, i) => btn.setAttribute('aria-pressed', BANKS[i] === item ? 'true' : 'false'));
+    try { localStorage.setItem(BANK_KEY, item.title); } catch (e) { /* 忽略 */ }
+    buildThemes();
+    resetRound();
+    render();
+  }
 
   const modeRow = el('div', 'mode-row');
   const modeButtons = [['card', '字卡'], ['list', '列表']].map(([key, label]) => {
@@ -128,7 +158,7 @@
   });
 
   const view = el('div');
-  app.append(switcher, modeRow, view);
+  app.append(bankRow, switcher, modeRow, view);
 
   /* ---------- 字卡 ---------- */
 
@@ -347,5 +377,12 @@
     }
   });
 
-  render();
+  // 記住上次選的字庫
+  let startBank = BANKS[0];
+  try {
+    const saved = localStorage.getItem(BANK_KEY);
+    const found = BANKS.find((b) => b.title === saved);
+    if (found) startBank = found;
+  } catch (e) { /* 忽略 */ }
+  selectBank(startBank);
 })();
