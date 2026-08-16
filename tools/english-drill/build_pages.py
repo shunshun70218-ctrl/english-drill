@@ -59,7 +59,7 @@ def build_wordbank() -> int:
     audio_out = out_dir / "audio"
     audio_out.mkdir(parents=True, exist_ok=True)
 
-    payload, total = [], 0
+    payload, flat, total = [], [], 0
 
     # 小的字庫排前面（核心 98 字先出現，2000 字在後）
     for bank_path in sorted(BANK_DIR.glob("*.json"), key=lambda p: p.stat().st_size):
@@ -91,30 +91,30 @@ def build_wordbank() -> int:
             "themes": [{"slug": t["slug"], "name": t["name"], "words": t["words"]} for t in bank["themes"]],
         })
 
-    # 給 n8n 每日推播用的扁平清單。音檔長度要帶著——LINE 的語音訊息
-    # 一定要給 duration（毫秒），沒有的話訊息會被 LINE 退回。
-    flat = []
-    for theme in bank["themes"]:
-        for index, word in enumerate(theme["words"], 1):
-            key = f"{theme['slug']}-{index:02d}"
-            entry = {
-                "term": word["term"],
-                "syllables": word["syllables"],
-                "stress": word["stress"],
-                "ipa": word["ipa"],
-                "pos": word.get("pos", ""),
-                "zh": word["zh"],
-                "theme": theme["name"],
-                "example_en": word.get("example_en", ""),
-                "example_zh": word.get("example_zh", ""),
-                "audio": word["audio"],
-                "audio_ms": int(round(manifest[f"{key}-w"]["dur"] * 1000)),
-            }
-            example = manifest.get(f"{key}-e")
-            if example:
-                entry["example_audio"] = word["example_audio"]
-                entry["example_ms"] = int(round(example["dur"] * 1000))
-            flat.append(entry)
+        # 給 n8n 每日推播用的扁平清單，所有字庫累加進同一份。
+        # 音檔長度一定要帶——LINE 的語音訊息少了 duration 會被直接退回。
+        for theme in bank["themes"]:
+            for index, word in enumerate(theme["words"], 1):
+                key = f"{theme['slug']}-{index:02d}"
+                entry = {
+                    "term": word["term"],
+                    "syllables": word["syllables"],
+                    "stress": word["stress"],
+                    "ipa": word["ipa"],
+                    "pos": word.get("pos", ""),
+                    "zh": word["zh"],
+                    "bank": bank["title"],
+                    "theme": theme["name"],
+                    "example_en": word.get("example_en", ""),
+                    "example_zh": word.get("example_zh", ""),
+                    "audio": word["audio"],
+                    "audio_ms": int(round(manifest[f"{key}-w"]["dur"] * 1000)),
+                }
+                example = manifest.get(f"{key}-e")
+                if example:
+                    entry["example_audio"] = word["example_audio"]
+                    entry["example_ms"] = int(round(example["dur"] * 1000))
+                flat.append(entry)
 
     (out_dir / "words.json").write_text(
         json.dumps({"count": len(flat), "words": flat}, ensure_ascii=False),
